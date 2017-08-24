@@ -1,0 +1,154 @@
+\begin{algorithm}[H]
+\SetAlgoLined
+    \SetKwProg{Fn}{Function}{}{}
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+
+    
+\Fn{compute\_cw\_offset(c$_i$, dims$_{codeword}$, $dims_{codebook}$)}{
+
+\Input{an integer $c_i$ indexing a codeword, the 3D codeword and codebook texture dimensions $dims_{codeword}$ and $dims_{codebook}$}
+\Output{a 3D integer vector $offset_{codeword}$ indicating the codeword offset in the texture}
+
+\BlankLine
+
+\BlankLine
+
+$num\_codewords_{xy}$ $\gets$ $dims_{codebook_{xy} }$ $\mathbf{div}$ $dims_{codeword_{xy} }$   \Comment{component-wise division}
+
+$num\_codewords_{slice}$ $\gets$ $num\_codewords_x$ * $num\_codewords_y$ \Comment{number per texture slice}
+
+\BlankLine
+
+$offset_{codeword{_z}}$ $\gets$ $c_i$ $\mathbf{div}$  $num\_codewords_{slice}$ \Comment{compute z offset of codeword}
+ 
+ 
+$c_i$ $\gets$ $c_i$ - $num\_codewords_{slice}$ \Comment{reduce index by z offset}
+  
+$offset_{codeword{_y}}$ $\gets$ $c_i$ $\mathbf{div}$  $num\_codewords_{x}$ \Comment{compute y offset of
+ codeword}
+ 
+$offset_{codeword{_x}}$ $\gets$ $c_i$ $\mathbf{mod}$ num\_codewords$_{x}$ \Comment{compute x offset of codeword}  
+
+\BlankLine
+
+\Return $offset_{codeword}$
+ 
+}
+ \caption{Compute Integer Codeword Offset}
+ \label{algo:codeword_offset}
+\end{algorithm}
+
+
+\newpage
+
+
+\begin{algorithm}[H]
+\SetAlgoLined
+    \SetKwProg{Fn}{Function}{}{}
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+
+    
+    %dims$_{idx}$, dims$_{codeword}$, $dims_{codebook}$)
+
+\Fn{transform\_to\_ncs($p$,  $dims_{idx\_vol}$)} {
+\Input{ a sampling position $p$ in normalized volume space, the index volume dimension
+s $dims_{idx\_vol}$}
+
+\Output{a sampling position relative to the dimensions of a codeword}
+
+\BlankLine
+
+\BlankLine
+
+$p_{abs_idx}$ $\gets$ $p$ * $dims_{idx\_vol}$ \Comment{express position absolute number of codewords covered}
+
+$p_{ncs}$ $\gets$ $get\_fractional(p_{abs_idx})$ \Comment retrieve fractional part
+
+\Return $p_{ncs}$
+
+}
+
+
+\Fn{sample\_vq\_element($p$, $\hat{V}_{idx}$, $\hat{V}_{cb}$, $dims_{codeword}$) }{
+
+\Input{ a sampling position $p$ in normalized volume space, the index volume $\hat{V}_{idx}$ and corresponding 3D codebook $\hat{V}_{cb}$, the dimensions of a 3D codeword $dims_{codeword}$ }
+
+\Output{a decompressed sample $\hat{V}(p)$ being the reconstruction of $V(p)$}
+
+\BlankLine
+
+\BlankLine
+
+$dims_{idx\_vol}$ $\gets$ $get\_dimensions(\hat{V}_{idx}$) \Comment{retrieve index volume dimensions}
+
+$dims_{codebook}$ $\gets$ $get\_dimensions(\hat{V}_{cb}$) \Comment{retrieve codebook dimensions}
+
+\BlankLine
+
+$c_i$ $\gets$ $sample\_texture\_normalized(\hat{V}_{idx}$, $p$) \Comment{sample codeword idx in $\hat{V}_{idx}$ at $p$}
+
+$offset_{codeword}$ $\gets$ $compute\_cw\_offset$($c_i$, $dims_{codeword}$, $dims_{codebook}$) \Comment{get int offset}
+
+$offset_{element_l}$ $\gets$ $transform\_to\_ncs$($p,  dims_{idx\_vol}$) \Comment{get local offset to cw element}
+
+$offset_{element_g}$ $\gets$ $offset_{codeword}$ + $offset_{element_l}$ \Comment{compute global offset}
+
+\BlankLine
+
+$vq\_decompressed\_sample$ $\gets$ $sample\_texture\_unnormalized$($\hat{V}_{cb}$, $offset_{element_g}$)
+
+\BlankLine
+
+\Return $vq\_decompressed\_sample$
+
+ 
+% \While{While condition}{
+ % instructions\;
+ % \eIf{condition}{
+  % instructions1\;
+   %instructions2\;
+   %}{
+   %instructions3\;
+  %}
+ %}
+}
+ \caption{Sample Vector Quantized Element}
+ \label{algo:vector_quantization_sampling}
+\end{algorithm}
+
+
+
+
+
+
+
+%  vec3 base_offset_plus_overflow = base_offset_fetch + overflow;
+
+
+
+%  if( base_offset_plus_overflow.x >= current_index_texture_size.x ) {
+%    overflow.x = 0;
+%    padded_remaining_pos.x = clamped_reset_pos;
+%  }
+
+%  if( base_offset_plus_overflow.y >= current_index_texture_size.y) {
+%    overflow.y = 0;
+%    padded_remaining_pos.y = clamped_reset_pos;
+%  }
+
+%  if( base_offset_plus_overflow.z >= current_index_texture_size.z) {
+%    overflow.z = 0;
+%    padded_remaining_pos.z = clamped_reset_pos;
+%  }
+
+
+%  vec3 final_index_pos = base_offset_fetch + overflow;
+%  final_index_pos = round(clamp(final_index_pos, vec3(0.0, 0.0, 0.0), vec3( current_index_texture_size ) - 1.0 ) )  ;
+%  ivec3 int_index_pos = ivec3(final_index_pos);
+
+
+
+
+

@@ -1,0 +1,172 @@
+ \input{visualizing_large_text_corpora_praeambel.tex} % Importiere die Einstellungen aus der Präambel
+% hier beginnt der eigentliche Inhalt
+\DeclareUnicodeCharacter{00A0}{ }
+
+\DeclareCaptionLabelFormat{bold}{\textbf{(#2)}}
+\captionsetup{subrefformat=bold}
+
+\usepackage{appendix}
+\usepackage[utf8]{inputenc}
+\usepackage{ltablex}
+%\usepackage[linesnumbered,ruled]{algorithm2e,algpseudocode}
+\usepackage{algorithm2e,algpseudocode}
+
+\usepackage[table]{xcolor}
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+\usepackage{amsmath}
+\usepackage{pbox}
+
+\hypersetup{hidelinks}
+
+
+\begin{document}
+\pagenumbering{Roman} % große Römische Seitennummerierung
+\pagestyle{empty}
+
+% Titelseite //////////////////////////////////////////
+\clearscrheadings\clearscrplain
+
+\begin{flushleft}
+\begin{normalsize}
+Bauhaus-Universität Weimar\\
+Fakultät Medien \\
+Studiengang Medieninformatik
+\vspace{3mm}
+\end{normalsize}
+\end{flushleft}
+
+\begin{center}
+\vspace{20mm}
+\begin{LARGE}
+Visualization of Large Text Corpora 
+%Temporal Interpolation and Spatio-Temporal Compression of Large Time-Varying Volume Data-Sets\\
+\end{LARGE}
+\vspace{20mm}
+\begin{LARGE}
+Bachelorarbeit
+\end{LARGE}\\
+\vspace{0.4cm}
+\vspace{2 cm}
+
+\vspace{1 cm}
+\begin{flushleft}Giuliano Castiglia \hfill Matrikelnummer 110656\\
+geb. am: 8. Oktober 1991 in Neapel
+\end{flushleft} 
+
+\vspace{0.5 cm}
+
+\begin{flushleft}
+1. Gutachter: Prof. Dr. Bernd Fröhlich\\
+2. Gutachter: tba\\
+\end{flushleft}
+
+\vspace{1.5cm}
+\begin{flushleft}
+Datum der Abgabe: 4. September 2017
+\end{flushleft}
+\end{center}
+\clearpage
+\pagestyle{useheadings} % normale Kopf- und Fußzeilen für den Rest
+\renewcommand*\contentsname{Table of Contents}
+
+% Eidesstattliche Erkl"arung ///////////////////////////////////////////////
+\addchap{Eidesstattliche Erklärung}
+
+Hiermit versichere ich, dass ich die Bachelorarbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, alle Ausführungen, die anderen Schriften wörtlich oder sinngemäß entnommen wurden, kenntlich gemacht sind und die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Studien- oder Prüfungsleistung war. 
+ 
+\vspace{3cm}
+Weimar, 10$^{\text{th}}$ February 2017
+
+\vspace{1cm}
+\noindent\rule{5cm}{0.4pt}\\
+GIULIANO CASTIGLIA
+
+\clearpage
+
+\addchap{Zusammenfassung}
+\todo{Write at last brief summarization of thesis}
+
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+
+% richtiger Inhalt
+\cleardoublepage
+\pagenumbering{arabic} % ab jetzt die normale arabische Nummerierung
+
+\chapter{Introduction}
+\label{chap:introduction}
+\input{sections/01_introduction.tex}
+
+\chapter{Related Work}
+% \label{chap:related_work}
+\input{sections/02_related_work.tex}
+
+\chapter{Visualization}
+% \label{chap:visualization}
+\input{sections/03_vis.tex}
+
+\cleardoublepage
+\clearpage
+%
+%\chapter{Future Work}
+%\label{chap:future_work}
+%\input{sections/09_future_work.tex}
+
+
+\newpage
+\let\cleardoublepage\clearpage
+\chapter*{Danksagung}
+The \textit{Lena} image is obtained from the website of Mike Wakin\footnote{ \textit{Lena} test image website.\quad {\url{http://www.ece.rice.edu/~wakin/images/}}\newline [Online, accessed 26-November-2016]}.
+
+Wikipedia Datensatz
+
+Ähnlichkeitsmatrix Tristan Licht
+
+wikidb project visaul text analytics
+
+
+%\pagebreak
+%\hspace{0pt}
+%\vfill
+
+\chapter*{}
+\todo{perso"hnliche Danksagung}
+
+
+%\vfill
+%\hspace{0pt}
+%\pagebreak
+
+%\printglossary[type=\acronymtype]
+
+%alphadin_martin
+%\bibliographystyle{bibliographie/a_m.bst}
+\bibliographystyle{unsrt}
+{\footnotesize
+\bibliography{bibliographie/bibliographie}
+}
+\newpage
+% Anhang
+% %\begin{multicols}{2}
+% \begin{appendices}
+% \addchap{Appendices}
+% \chapter{Pseudocode}
+% \label{app:pseudocode}
+% \input{sections/appendix_pseudocode.tex}
+
+
+
+
+% \end{appendices}
+%
+%\subsubsection*{cpu.c aus LinuxSiggraph 2011: Occlusion culling in Alan Wake 2.6.16}\label{•}.cpu}\lstinputlisting[language=C]%{code/cpu.c}
+%\end{multicols}
+
+
+
+
+\end{document}

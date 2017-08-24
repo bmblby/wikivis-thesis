@@ -1,0 +1,129 @@
+
+
+
+
+
+
+
+% drafty concept
+
+\section{Konzept}
+Das Ziel der Visualisierung ist es, die Kosinusvergleiche zwischen Wikipedia-artikel darzustellen und F"alle von Textwiederverwendung aufzuzeigen.
+Die Daten zu den Artikeln sollen wenn möglich ohne lange Wartezeiten dargestellt werden k"onnen sowie weiter Informationen zu den Artikeln.
+
+
+\subsection{Visualisierung der Kategorien}
+Die Visualisierurng startet mit einer "Ubersicht der 22 "`Main Topic Classifications"'  und einer Suchleiste.
+
+Die 22 "`Main Topic Classifications"' sollen mit dem jeweiligen Namen der Kategorie als Knoten radial angeordnet werden. Im Zentrum des radialen Layouts soll die Suchleiste platziert werden.
+
+Die Gr"o"se der Knoten zeigt an, wie viele direkte Subkategorien in der Kategorie enthalten sind. 
+Eine weitere Möglichkeit w"are 
+es, die Gr"o"se der Kategorie Knoten auf die Anzahl aller direkten und indirekten Subkategorien abzubilden.
+In der Suchleiste kann nach einer beliebigen Kategorie gesuchen werden, damit wird die gewählte Kategorie in den Fokus der Visualisierung gestellt.
+Existiert zu dem Suchbegriff eine Kategorie wird der Titel der Kategorie im Zentrum der Visualisierung dargestellt.
+Auf dem radilem Layout werden die 22 "`Main Topic Classifications"' ersetzt, durch die direkten Subkategorien der gefundenen Kategorie.
+
+Wählt man mit einem Klick einer der Kategorien aus, die im radialem Layout angeordnet sind, werden die direkten Subkategorien dargestellt.
+Auf diese Weise wird dem Nutzer erm"oglicht, den gerichteten Kategoriegraphen, zu explorieren.
+Durch die nun zusätslich dargestellten Subkategorien lässt sich ein Überblick gewinnen, in welchen Kategorien besonders viele Artikel stehen.
+% Um noch nicht sichtbare Verkn"upfungen zwischen Kategorien aufzuzeigen, w"are es m"oglich die Kanten des gerichteten Graphen einzublenden, welche in der Logik der Kategorien Hierarchie auf Kategorien zeigen, welche h"ohre liegen.
+
+\paragraph{Filter}
+
+An diesem Punkt wäre eine M"oglichkeit der weiteren Interaktion die Benutzung verschiedener Filter auf den sichtbaren Kategorien.
+Die Filterfunktionen sollen es ermöglichen, anhand von ausgewählten Eigenschaften, nur noch bestimmte Kategorien darzustellen.
+Möchte der Nutzer nur die Kategorien mit besonders langen Artikeln sehen, kann er nach der Artikellange filtern. Weitere m"ögliche Filter wären zum Beispiel:
+\begin{itemize}
+    \item Anzahl der enthaltenen Artikel 
+    \item Anzahl der Paragraphen
+    \item Anzahl der entahltenen Sub-Kategorien
+\end{itemize}
+
+Denkbar sind jedoch alle zur Verf"ugung stehenden Informationen über Artikel und Kategorien.
+In den Kategorien stehen Artikel, welche einer genauen Revision zugeordnet werden können. Die Revision stellt ein Änderung am Artikel dar
+und lässt sich einem Revisioner, einer Uhrzeit an dem die Änderung stattgefunen hat und evtl. sogar einem Standort zuordnen.
+Nach solchen Eigenschaften lie"sen sich die Kategorien auch filtern.
+
+\paragraph{"Ahnlichkeitsmatrix}
+
+Um die dargestellten Kategorien in Bezug zueinander zu stellen, werden weitere Informationen ben"otigt, welche nicht direkt aus der 
+Wikipedia kommen k"onnen. Dazu ist der Datensatz mit Kosinus-Vergleichen n"otig.
+
+Durch die Auswahl einer Kategorie, wird auch gleichzeitig die Menge, der in ihr enthaltenen Artikel ausgew"ahlt.
+Wenn man sich alle Kanten zwischen den Artikeln anzeigen lassen würde, welche eine "Anlichkeit zu einander haben, hätte man ein klassisches "Overplotting" Problem und w"urde nichts mehr erkennen.
+
+Wählt man eine Kategorie aus, die einen Interessiert sucht ein Algorithmus aus der Menge an Artikeln der gew"ahlten Kategorie und den restlichen Artikel in den anderen Kategorien,  Pärchen, die einen "Ahnlichkeitswert aufweist, der "uber einem festgelegten Schwellwert liegt.
+Die nicht ausgew"ahlten Kategorien werden je nach Anzahl der enthaltenen Treffer unterschiedlich stark gef"arbt.
+In der Visualisierung erkennt man nun, in welchen Kategorien Artikel "Ahnlichkeiten zueinander haben und ob viele dieser Verbindungen zwischen den Kategorien existieren.
+Sind zwei Kategorien ausgew"ahlt wird eine andere Form der Visualisierung gebraucht, um die zwei Kategorien darzustellen.
+
+
+\subsection{Visualisierung der Artikel}
+In einem vorherigem Schritt wurden zwei Kategorien ausgew"ahlt, welche Artikeln mit "Ahnlichkeiten "uber einem bestimmten 
+Schwellwert zueinander besitzen.
+In dieser Visualisierung m"ochte man auf die Artikel und deren Relation zueinander eingehen. 
+
+Der Focus in diesem Teil der Visualisierung sollte auf den Artikeltexten und Passagen von Textwiederverwendung liegen.
+Zu sehen sind zwei Listen von Paragraphen, getrennt durch eine Art Lineal, welches den "Ahnlichkeitswert angibt.
+Alle Paragraphen tragen als "Uberschrift den Titel aus dem Artikel aus dem sie stammen.
+In der linken Liste sind die Paragraphen, aus der Referenzkategorie und in der rechten h"alfte sind die Paragraphen aus der 
+vergleichenden Kategorie.
+Es sind alle Paragraphenp"archen aus den zwei Kategorien geladen, durch scrollen ist es m"oglich weiter P"archen mit einer niedrigeren 
+"Ahnlichkeit zu sehen.
+
+Mit einem Klick auf einen gelisteten Paragraphen, werden die restlichen Paragraphen aus dem zugehörigem Artikel in der Listenansicht dargestellt.
+In der Listenansicht der referenzierten Kategorie ist nun ein kompletter Artikel, mit all seinen Paragraphen dargestellt.
+Nun kann sich angeschaut werden zu welchen weiteren Paragraphen, au"serhalb der gewählten Kategorie, der Artikel Ähnlichkeiten besitzt.
+Die neue Auflistung an Paragraphenpärchen ist wieder nach absteigender Ähnlichkeit sortiert, jedoch ist es auch möglich den Artikel seiner
+ursprünglichen Reihenfolge darszustellen.
+
+Zwischen zwei "ahnlichen Paragraphen kann ein Textalignment berechnet werden um die Artikel weiter zu inspizieren und herauszufinden,
+ob Textpassagen in beiden Paragraphen verwendet wurden.
+
+
+Zu Beginn sieht man die 22 Main Tonic Classifications
+Jede Main Topic Classification wird als Knoten dargestellt
+die Größe des Knoten ist abhängig von der direkten Anzahl an Artikel in der Kategorie
+die 22 Main Topic Classifications sind radial angeordnet
+in dem radialem Layout ist eine Suchleiste, mit der sich nach weitern Kategorien suchen lässt
+alle Kategorien die auf dem radialem Layout angeordnet sind lassen sich durch eine klick expandieren
+expandierte Kategorien zeigen ihre direkten Subkategorien an
+es lassen sich mehrere Kategorien und Subkategorien zeitgleich expandieren
+auf allen sichtbaren Kategorien lassen sich Filter anwenden
+Filtern lassen sich die Kategorien nach mehreren Eigenschaften
+\begin{itemize}
+    \item Anzahl der enthaltenen Artikel 
+    \item Anzahl der Paragraphen
+    \item Anzahl der entahltenen Sub-Kategorien
+    \item Anzahl der Wörter
+\end{itemize}
+
+
+Eine Kategorie kann ausgewählt werden, dadurch werden alle anderen Kategorien auf Ihre Ähnlichkeit hin eingefärbt
+verglichene Kategorien werden nach Anzahl der Ähnlichkeitspärchen unterschiedlich start eingefärbt
+ein Schwellwert kann eingestellt werden, ab welchem Ähnlichkeitswert Artikelpaare in Betracht gezogen werden.
+
+
+
+% \section{Daten}
+
+% % ////////////////////////////////////
+% \begin{figure}[H]
+%     \centering
+%     \begin{subfigure}[b]{0.96\textwidth}
+%         \includegraphics[width=\textwidth]{images/01_introduction/motivation_temporal_superresolution_one.pdf}
+%         \caption{3D video playback rate matching the low recording rate}
+%         % \label{subfig:playback_rate_matching}
+%     \end{subfigure}
+    
+% 	\vspace{1.0cm}
+    
+%     \begin{subfigure}[b]{0.96\textwidth}
+%         \includegraphics[width=\textwidth]{images/01_introduction/motivation_temporal_superresolution_two.pdf}
+%         \caption{3D video playback matching the video encoding standards to ensure persistence of fluid motion}
+%         % \label{subfig:playback_rate_higher}
+%     \end{subfigure}
+%     \caption[Concept of Temporal Super Resolution in a 3D Video Player]{In this Figure, two different playback rates for a low frame rate recording of a 3D volume sequence is presented. The tick marks on the black arrows indicate the position of recorded frames. The blue arrows indicate the playback rate that matches the recording \subref{subfig:playback_rate_matching} and an increased playback rate \subref{subfig:playback_rate_higher} using temporal interpolation to provide the viewer with a impression of fluid motion. }
+%     % \label{fig:temporal_superresolution}
+% \end{figure}
