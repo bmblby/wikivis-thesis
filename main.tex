@@ -70,44 +70,64 @@ Datum der Abgabe: 4. September 2017
 \pagestyle{useheadings} % normale Kopf- und Fußzeilen für den Rest
 \renewcommand*\contentsname{Table of Contents}
 
-% Eidesstattliche Erkl"arung ///////////////////////////////////////////////
-\addchap{Eidesstattliche Erklärung}
+% ===============================================================
 
-Hiermit versichere ich, dass ich die Bachelorarbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, alle Ausführungen, die anderen Schriften wörtlich oder sinngemäß entnommen wurden, kenntlich gemacht sind und die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Studien- oder Prüfungsleistung war. 
+% % Eidesstattliche Erkl"arung 
+% \addchap{Eidesstattliche Erklärung}
+
+% Hiermit versichere ich, dass ich die Bachelorarbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, alle Ausführungen, die anderen Schriften wörtlich oder sinngemäß entnommen wurden, kenntlich gemacht sind und die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Studien- oder Prüfungsleistung war. 
  
-\vspace{3cm}
-Weimar, 10$^{\text{th}}$ February 2017
+% \vspace{3cm}
+% Weimar, 10$^{\text{th}}$ February 2017
 
-\vspace{1cm}
-\noindent\rule{5cm}{0.4pt}\\
-GIULIANO CASTIGLIA
+% \vspace{1cm}
+% \noindent\rule{5cm}{0.4pt}\\
+% GIULIANO CASTIGLIA
 
-\clearpage
+% \clearpage
 
-\addchap{Zusammenfassung}
-\todo{Write at last brief summarization of thesis}
+% ===============================================================
 
+% \addchap{Zusammenfassung}
+% \todo{Write at last brief summarization of thesis}
+
+% ===============================================================
 
 \tableofcontents
 %\listoffigures
 %\listoftables
 
 
+% ===============================================================
+
 % richtiger Inhalt
 \cleardoublepage
 \pagenumbering{arabic} % ab jetzt die normale arabische Nummerierung
 
-\chapter{Introduction}
-\label{chap:introduction}
+
+\chapter{Einleitung}
+\label{chap:einleitung}
 \input{sections/01_introduction.tex}
 
 \chapter{Related Work}
-% \label{chap:related_work}
+\label{chap:related_work}
 \input{sections/02_related_work.tex}
 
-\chapter{Visualization}
-% \label{chap:visualization}
-\input{sections/03_vis.tex}
+\chapter{Daten}
+\label{chap:daten}
+\input{sections/03_daten.tex}
+
+\chapter{Visualisierung}
+\label{chap:visualization}
+\input{sections/04_vis.tex}
+
+\chapter{Implementierung}
+\label{chap:Implementierung}
+\input{sections/05_implementierung.tex}
+
+\chapter{Zusammenfassung}
+\label{chap:Zusammenfassung}
+\input{sections/06_zusammenfassung.tex}
 
 \cleardoublepage
 \clearpage
@@ -117,25 +137,32 @@ GIULIANO CASTIGLIA
 %\input{sections/09_future_work.tex}
 
 
-\newpage
-\let\cleardoublepage\clearpage
-\chapter*{Danksagung}
-The \textit{Lena} image is obtained from the website of Mike Wakin\footnote{ \textit{Lena} test image website.\quad {\url{http://www.ece.rice.edu/~wakin/images/}}\newline [Online, accessed 26-November-2016]}.
+% ================================================================
 
-Wikipedia Datensatz
 
-Ähnlichkeitsmatrix Tristan Licht
+% \newpage
+% \let\cleardoublepage\clearpage
+% \chapter*{Danksagung}
+% The \textit{Lena} image is obtained from the website of Mike Wakin\footnote{ \textit{Lena} test image website.\quad {\url{http://www.ece.rice.edu/~wakin/images/}}\newline [Online, accessed 26-November-2016]}.
 
-wikidb project visaul text analytics
+% Wikipedia Datensatz
+
+% Ähnlichkeitsmatrix Tristan Licht
+
+% wikidb project visaul text analytics
+
+
+% ================================================================
 
 
 %\pagebreak
 %\hspace{0pt}
 %\vfill
 
-\chapter*{}
-\todo{perso"hnliche Danksagung}
+% \chapter*{}
+% \todo{perso"hnliche Danksagung}
 
+% ================================================================
 
 %\vfill
 %\hspace{0pt}
@@ -149,6 +176,10 @@ wikidb project visaul text analytics
 {\footnotesize
 \bibliography{bibliographie/bibliographie}
 }
+
+% ================================================================
+
+
 \newpage
 % Anhang
 % %\begin{multicols}{2}
@@ -157,9 +188,6 @@ wikidb project visaul text analytics
 % \chapter{Pseudocode}
 % \label{app:pseudocode}
 % \input{sections/appendix_pseudocode.tex}
-
-
-
 
 % \end{appendices}
 %
