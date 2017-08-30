@@ -1,4 +1,6 @@
 build
+*.pdf
+
 *.aux
 *.glo
 *.idx
