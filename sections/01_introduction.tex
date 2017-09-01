@@ -1,20 +1,70 @@
 % !TEX root = ../main.tex
 % Einleitung
 
-Bezug auf das vorangegangene Projekt Visual Text Analytics
+
+% einf"uhrung allgemein B"aume und Enzyklop"adien
+Das Bed"urfniss der Veranschaulichung von Informationen reicht weit zur"ck in die Geschichte des Menschen.
+Eine der "Altesten visuellen Methaphern ist dabei der Baum.
+Darstellungen von B"aumen k"onnten unterschiedlicher nicht sein, von realistichen Abbildungen bis zu der abstrakten Form von simplen Knoten und Kanten.
+Als visuelle Methaper um Informationen darzustellen, reichen die Bereiche, in welchen der Baum genutzt wird, von Erbreinfolgen oder der Hierarchie von Tieren.
+Mit Hilfe des Baumes als visuelle Representation, lassen sich Komplexe Beziehungen zwischen einzelnen Entit"aten darstellen.\cite{lima2014book}
+Viele Darstellungen von B"aumen machen sich vor allem ihre hierarhiche und geordnete Struktur zu nutzten um Wissen zu veranschaulichen.
+
+% Genutzt f"ur viele verschiedene Darstellungen von Beziehungen, wie Erbreinfolge, Darstellung von Enzyklop"adien.
+% Beispiel (Lima)
+
+%NOTE
+% Relevanz von Informationsvisualisierung\\
+% Bezug auf das vorangegangene Projekt Visual Text Analytics\\
+% einmal eine Abtrakte Motivation -> Darstellung Kategorienbaum + "Ahnlichkeiten
+%
+% Motivation aus dem vorg"anger Projekt -> konkreter Bezug auf fehlende eigenschaften und Erkenntnisse
+% defacto die einzige Visualisierung f"ur den Kategoriebaum der Wikipedia
+% =========================================================
+
 
 \section{Motivation}
 \begin{itemize}
-    \item Kritikpunkte im Projekt Visual Text Analytics
-    
+  \item Bedeutung des Wikipediadatensatzes
+  \item Kritikpunkte im Projekt Visual Text Analytics
+  \begin{itemize}
+    \item statische Layout
+    \item fehlende M"oglichkeit zur Exploration der Daten
+    \item "Ubersicht der Visualisierung ist sehr undurchsichtig
+    \item Schwierigkeiten beim nachvollziehen der Verbindungen der Artikel untereinander
+    \item "Anderung des Schwellwertes f"ur "Ahnlichkeiten -> zu viele Kanten
+    \item fehlende M"oglichkeit die Auswahl an Artikel einzuschr"anken
+    \item Unterst"utzende Funktion zum Zusammenfassen von mehreren Artikel -> Kategorien, Cluster
+    \item Artikelcluster mit viele "Ahnlichkeiten zueinander sind schwer zu lesen
+    \item Kategorienbaum nur unzureichend als Unterzt"utzung neben den Artikeln
+  \end{itemize}
 \end{itemize}
+
+Der Fokus der Arbeit liegt darin, eine geeignete Darstellung der Vebindungen zwischen den Kategorien der Wikipedia zufinden.
+Desweiteren setzt sich die Arbeit damit auseinander eine Strategie zu entwickeln, um eine d"unn besetzt Matrix in der Gr"o"se von 800GB zu veranschaulichen und zug"anglich zu machen.
+Beide Teile der Arbeit haben als gemeinsames Ziel das Verst"ndnis der Wikipedia zu verbessern.
+
+
+Ziel der Arbeit ist es, die hierarchiche Struktur der Kategorien aus der Wikipedia darzustellen.
+Dabei soll es m"oglich sein jede Kategorie zu suchen und sich ihre Unterkategorien beliebig tief anzuschauen.
+Wichtig ist vor allem, das beim Explorieren der Unterkategorien keine  Knoten oder Kanten "ubereinander gezeichnet werden.
+
+Im  Projekt Visual Text Analysis
 
 
 \section{Ziel}
 \begin{itemize}
+    \item Verbesserung des Verst"andnisses des "Ahnlichkeitsma"ses
     \item Darstellung der Hierarchie von Kategorien
+    \begin{itemize}
+      \item Konstruktion eines Kategorienbaum mit der M"oglichkeit der Exploration
+    \end{itemize}
     \item Interaktive Visualisierung
+    \begin{itemize}
+      \item "Anderung des Schwellwertes zur Laufzeit
+    \end{itemize}
     \item Exploration der Daten
+    \item Bezug zu anderen Datens"atzen: Authoren, Editierungen, etc.
 \end{itemize}
 
 
@@ -38,9 +88,9 @@ Bezug auf das vorangegangene Projekt Visual Text Analytics
 %         \caption{3D video playback rate matching the low recording rate}
 %         % \label{subfig:playback_rate_matching}
 %     \end{subfigure}
-    
+
 % 	\vspace{1.0cm}
-    
+
 %     \begin{subfigure}[b]{0.96\textwidth}
 %         \includegraphics[width=\textwidth]{images/01_introduction/motivation_temporal_superresolution_two.pdf}
 %         \caption{3D video playback matching the video encoding standards to ensure persistence of fluid motion}
@@ -50,4 +100,4 @@ Bezug auf das vorangegangene Projekt Visual Text Analytics
 %     % \label{fig:temporal_superresolution}
 % \end{figure}
 
-%  \cite{VillanuevaEtAl:2016} 
+%  \cite{VillanuevaEtAl:2016}

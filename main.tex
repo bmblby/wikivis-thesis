@@ -40,7 +40,7 @@ Studiengang Medieninformatik
 \begin{center}
 \vspace{20mm}
 \begin{LARGE}
-Visualization of Large Text Corpora 
+Visualization of Large Text Corpora
 %Temporal Interpolation and Spatio-Temporal Compression of Large Time-Varying Volume Data-Sets\\
 \end{LARGE}
 \vspace{20mm}
@@ -53,7 +53,7 @@ Bachelorarbeit
 \vspace{1 cm}
 \begin{flushleft}Giuliano Castiglia \hfill Matrikelnummer 110656\\
 geb. am: 8. Oktober 1991 in Neapel
-\end{flushleft} 
+\end{flushleft}
 
 \vspace{0.5 cm}
 
@@ -73,24 +73,36 @@ Datum der Abgabe: 4. September 2017
 
 % ===============================================================
 
-% % Eidesstattliche Erkl"arung 
-% \addchap{Eidesstattliche Erklärung}
+% Eidesstattliche Erkl"arung
+\addchap{Eidesstattliche Erklärung}
 
-% Hiermit versichere ich, dass ich die Bachelorarbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, alle Ausführungen, die anderen Schriften wörtlich oder sinngemäß entnommen wurden, kenntlich gemacht sind und die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Studien- oder Prüfungsleistung war. 
- 
-% \vspace{3cm}
-% Weimar, 10$^{\text{th}}$ February 2017
+Hiermit versichere ich, dass ich die Bachelorarbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, alle Ausführungen, die anderen Schriften wörtlich oder sinngemäß entnommen wurden, kenntlich gemacht sind und die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Studien- oder Prüfungsleistung war.
 
-% \vspace{1cm}
-% \noindent\rule{5cm}{0.4pt}\\
-% GIULIANO CASTIGLIA
+\vspace{3cm}
+Weimar, 10$^{\text{th}}$ February 2017
 
-% \clearpage
+\vspace{1cm}
+\noindent\rule{5cm}{0.4pt}\\
+GIULIANO CASTIGLIA
+
+\clearpage
 
 % ===============================================================
 
-% \addchap{Zusammenfassung}
-% \todo{Write at last brief summarization of thesis}
+\addchap{Kurzfassung}
+\todo{max 3/4 bis 1 Seite}
+Destilierte variante der Thesis
+was ist das in der Arbeit entstanden
+mit Welchen Methoden
+mit welchen Daten
+
+Im Rahmen dieser Arbeit wird eine Methode erl"autert, um die Kategorien der Wikipedia in einem radial angeordnetem Baum darzustellen, als auch einen Verfahren zu finden um eine d"unn besetzte Matrix mit Vergleichen zwischen Artikel zu filtern.
+Die Daten "uber Kategorien und Artikel werden aus der Wikipedia extrahiert und in einem Format zusammengefasst, welches die Visualisierung der Daten erm"oglichen soll.
+% Dabei wird darauf eingegangen welche Eigenschaften die Verkn"upfungen der Kategorien zueinander besitzten.
+Dabei wird eine Methode erarbeitet um aus dem vernetztem Graphen von Kategorien, eine hierarchiche Baumstruktur zu erhalten.
+Diese Baumstruktur soll interaktiv von einem Benutzer exploriert werden k"onnen, ohne, dass die Gr"o"s der Daten einen Einfluss auf die Laufzeit der Applikation hat.
+In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um eine Abbildung der d"unn besezte Matrix von einer Gr"o"se von 800GB, auf ein Themengebiet zu beschr"anken.
+
 
 % ===============================================================
 
@@ -118,6 +130,10 @@ Datum der Abgabe: 4. September 2017
 \label{chap:daten}
 \input{sections/03_daten.tex}
 
+\chapter{Datenverarbeitung}
+\label{chap:daten_ver}
+\input{sections/03_daten2.tex}
+
 \chapter{Visualisierung}
 \label{chap:visualization}
 \input{sections/04_vis.tex}
@@ -132,25 +148,20 @@ Datum der Abgabe: 4. September 2017
 
 \cleardoublepage
 \clearpage
-%
-%\chapter{Future Work}
-%\label{chap:future_work}
-%\input{sections/09_future_work.tex}
-
 
 % ================================================================
 
 
-% \newpage
-% \let\cleardoublepage\clearpage
-% \chapter*{Danksagung}
+\newpage
+\let\cleardoublepage\clearpage
+\chapter*{Danksagung}
 % The \textit{Lena} image is obtained from the website of Mike Wakin\footnote{ \textit{Lena} test image website.\quad {\url{http://www.ece.rice.edu/~wakin/images/}}\newline [Online, accessed 26-November-2016]}.
 
-% Wikipedia Datensatz
+Wikipedia Datensatz
 
-% Ähnlichkeitsmatrix Tristan Licht
+Ähnlichkeitsmatrix Tristan Licht
 
-% wikidb project visaul text analytics
+wikidb project visaul text analytics
 
 
 % ================================================================
