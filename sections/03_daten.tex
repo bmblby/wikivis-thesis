@@ -3,7 +3,40 @@
 
 \todo{Martin fragen nach Namen f"ur die "`Matrix"'}
 
+Dieser Teil der Arbeit besch"aftigt sich mit der Struktur der genutzten Datens"atze.
+Es wird erl"autert welche Schritte ben"otigt werden um die Datens"atze zu erstellen und nach welchen Regel sie formatiert sind.
+Au"serdem wir beschrieben, welche Schritte n"otig sind um die n"otigen Informationen f"ur die Visualisierung zu extrahieren.
+Bei den genutzte Datens"atzen handelt es sich um einen Wikipedidump im XML Format und um eine sp"arlich besetzte Adjazenzmatrix.
+Beide Datens"atze sind sehr unterschiedlich in ihrer Struktur, als auch ihrem Inhalt und Umfang.
+In den letzten beiden Teilen dieses Kapitels wird genauer auf den Aufbau der Datenbank eingegangen und wie die Daten w"ahren der Laufzeit des Programms bearbeitet werden.
+
+%NOTE: vllt groesse martin erste simMatrix
+\begin{table}
+\centering
+% \begin{center}
+\begin{tabular}{l r}
+  \hline
+  Datensatz & Gr"o"se \\
+  \hline
+  Wikipediadump & 54 GB \\
+  "Ahnlichkeitsmatrix & 642 GB \\
+  \hline
+\end{tabular}
+% \end{center}
+\caption{Gr"o"se der Datens"atze in GB}
+\label{dataset-size}
+\end{table}
+
+
 \section{"Ahnlichkeitsmatrix}
+Der Gr"o"sere von beiden Datens"atzen ist die d"unn besetzte Matrix.
+In der Matrix werden die berechneten "Ahnlichkeitswerte zwischen zwei Artikeln gespeichert.
+
+In der "Ahnlichkeitsmatrix nach \cite{riehmann2016visualizing} werden alle Artikel der Wikipedia mit 
+In zwei vorangegangen Projekten wurde
+
+
+
 \begin{itemize}
     \item Bezugname Arbeit von Potthast
     \item Bezugnahme zur Thesis von Tristan Licht
@@ -18,14 +51,18 @@
     \begin{itemize}
       \item
     \end{itemize}
-
 \end{itemize}
+ % =================================================
+
+
 
 \section{Wikipedia XML Dump}
 \begin{itemize}
     \item Datenstruktur des Wikipediakorpus
     \item Notwendige Metainformationen aus dem Korpus
+    \item Struktur Kategoriebaum
 \end{itemize}
+ % =================================================
 
 
 
@@ -33,6 +70,7 @@
 \begin{itemize}
     \item Erl"auterung der Datenbankstruktur
 \end{itemize}
+ % =================================================
 
 
 \section{Ablauf der Datenverabeitung}
@@ -40,3 +78,4 @@
     \item Aufbereitung der Rohdaten: S"auberung, Formatierung
     \item Erstellung der Datenbank
 \end{itemize}
+ % =================================================
