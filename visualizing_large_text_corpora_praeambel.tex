@@ -71,16 +71,17 @@
 % Quellcode
 \usepackage{listings} % für Formatierung in Quelltexten
 \definecolor{grau}{gray}{0.25}
-\lstset{
+\lstdefinestyle{codestyle}{
 	extendedchars=true,
-	basicstyle=\tiny\ttfamily,
-	%basicstyle=\footnotesize\ttfamily,
+	basicstyle=\small\ttfamily,
+% 	basicstyle=\footnotesize\ttfamily,
 	tabsize=2,
 	keywordstyle=\textbf,
 	commentstyle=\color{grau},
 	stringstyle=\textit,
 	numbers=left,
-	numberstyle=\tiny,
+	numberstyle=\small,
+	escapechar=!,
 	% für schönen Zeilenumbruch
 	breakautoindent  = true,
 	breakindent      = 2em,
@@ -99,6 +100,27 @@
 \let\saved@equation\equation
 \def\equation{\@hyper@itemfalse\saved@equation}
 \makeatother 
+
+% from main
+
+\usepackage{appendix}
+\usepackage[utf8]{inputenc}
+\usepackage{ltablex}
+%\usepackage[linesnumbered,ruled]{algorithm2e,algpseudocode}
+\usepackage{algorithm2e,algpseudocode}
+
+\usepackage{tikz}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+
+\usepackage{csquotes}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{textcomp}
 
 
 % Eigene Befehle %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,7 +145,11 @@
       {\ttfamily{#1}}
 }
 
-
+\newcommand\mybox[2][]{
+  \tikz[overlay]
+  \node[fill=red!20,sep=2pt, anchor=text, rectangle,#1] {#2};
+  \phantom{#2}
+}
 
 
 % bild mit defnierter Breite einfügen

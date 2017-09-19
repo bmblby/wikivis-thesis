@@ -2,24 +2,15 @@
 % !TEX root = ./main.tex
 % hier beginnt der eigentliche Inhalt
 \DeclareUnicodeCharacter{00A0}{ }
-
 \DeclareCaptionLabelFormat{bold}{\textbf{(#2)}}
 \captionsetup{subrefformat=bold}
 
-\usepackage{appendix}
-\usepackage[utf8]{inputenc}
-\usepackage{ltablex}
-%\usepackage[linesnumbered,ruled]{algorithm2e,algpseudocode}
-\usepackage{algorithm2e,algpseudocode}
-
-\usepackage[table]{xcolor}
-\usepackage{pgfplots}
+\usetikzlibrary{arrows.meta, babel, decorations.pathreplacing, matrix}
+\usepackage{tikz-uml}
 \pgfplotsset{width=10cm,compat=1.9}
-\usepackage{amsmath}
-\usepackage{pbox}
+\addbibresource{bibliographie/bibliographie.bib}
 
 \hypersetup{hidelinks}
-
 
 \begin{document}
 \pagenumbering{Roman} % große Römische Seitennummerierung
@@ -73,13 +64,13 @@ Datum der Abgabe: 4. September 2017
 
 % ===============================================================
 
-% Eidesstattliche Erkl"arung
+% Eidesstattliche Erklärung
 \addchap{Eidesstattliche Erklärung}
 
 Hiermit versichere ich, dass ich die Bachelorarbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, alle Ausführungen, die anderen Schriften wörtlich oder sinngemäß entnommen wurden, kenntlich gemacht sind und die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Studien- oder Prüfungsleistung war.
 
 \vspace{3cm}
-Weimar, 10$^{\text{th}}$ February 2017
+Weimar, der 2. Oktober 2017
 
 \vspace{1cm}
 \noindent\rule{5cm}{0.4pt}\\
@@ -90,26 +81,33 @@ GIULIANO CASTIGLIA
 % ===============================================================
 
 \addchap{Kurzfassung}
-\todo{max 3/4 bis 1 Seite}
-Destilierte variante der Thesis
-was ist das in der Arbeit entstanden
-mit Welchen Methoden
-mit welchen Daten
+% Destilierte Variante der Thesis
+% was ist in der Arbeit entstanden?
+% mit Welchen Methoden
+% mit welchen Daten
 
-Im Rahmen dieser Arbeit wird eine Methode erl"autert, um die Kategorien der Wikipedia in einem radial angeordnetem Baum darzustellen, als auch einen Verfahren zu finden um eine d"unn besetzte Matrix mit Vergleichen zwischen Artikel zu filtern.
-Die Daten "uber Kategorien und Artikel werden aus der Wikipedia extrahiert und in einem Format zusammengefasst, welches die Visualisierung der Daten erm"oglichen soll.
-% Dabei wird darauf eingegangen welche Eigenschaften die Verkn"upfungen der Kategorien zueinander besitzten.
-Dabei wird eine Methode erarbeitet um aus dem vernetztem Graphen von Kategorien, eine hierarchiche Baumstruktur zu erhalten.
-Diese Baumstruktur soll interaktiv von einem Benutzer exploriert werden k"onnen, ohne, dass die Gr"o"s der Daten einen Einfluss auf die Laufzeit der Applikation hat.
-In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um eine Abbildung der d"unn besezte Matrix von einer Gr"o"se von 800GB, auf ein Themengebiet zu beschr"anken.
+Im Rahmen dieser Arbeit wird eine Visualisierung vorgestellt, welche Kategorien der Wikipedia visuell in Form eines radial angeordneten Baumes darstellt.
+Des Weiteren wird ein Verfahren erläutert, welches auf Basis der Wikipedia-Kategorien eine dünn besetzte Matrix von Ähnlichkeiten zwischen Wikipedia-Artikel filtert.
+Die Wikipedia dient dabei als Quelle für die Daten.
+
+% Im Rahmen dieser Arbeit wird eine Methode erläutert, welche einerseits die Kategorien der öffentlich zugänglichen Online-Plattform und Enzyklopädie Wikipedia in Form eines radial angeordneten Baumes visuell darstellt, als auch andererseits dazu dienen soll, ein Verfahren zu finden, um eine dünn besetzte Matrix mit Vergleichen zwischen Artikel zu filtern.
+Die Informationen über die Kategorien und Artikel werden dabei aus der Wikipedia extrahiert und in einem Format zusammengefasst, welches die visuelle Darstellung der Daten ermöglichen soll.
+Dabei wird eine Methode erarbeitet, um aus dem vernetztem Graph von Kategorien, eine hierarchische Baumstruktur zu erhalten.
+Diese Baumstruktur soll interaktiv verwendbar sein und eine Exploration der Baumstruktur ermöglichen.
+In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn besetzte Matrix, von einer Größe von 643\,GB, auf ein Themengebiet einzuschränken und auf diese Weise die sehr umfangreiche Menge an Artikelvergleichen semantisch zu filtern.
 
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./cover}
+\caption{Die Kategorie \textit{Computer science} bildet als Stammverzeichnis das Zentrum. Alle Kategorien einer Entfernung von drei zur Stammkategorie sind auf konzentrischen Ringen angeordnet.}
+\label{fig:cover}
+\end{figure}
 % ===============================================================
 
 \tableofcontents
 %\listoffigures
 %\listoftables
-
 
 % ===============================================================
 
@@ -184,24 +182,27 @@ wikidb project visaul text analytics
 
 %alphadin_martin
 %\bibliographystyle{bibliographie/a_m.bst}
-\bibliographystyle{unsrt}
-{\footnotesize
-\bibliography{bibliographie/bibliographie}
-}
+
+\printbibliography
+
+% \bibliographystyle{unsrt}
+% {\footnotesize
+% \bibliography{bibliographie/bibliographie}
+% }
 
 % ================================================================
 
 
 \newpage
 % Anhang
-% %\begin{multicols}{2}
-% \begin{appendices}
-% \addchap{Appendices}
-% \chapter{Pseudocode}
-% \label{app:pseudocode}
-% \input{sections/appendix_pseudocode.tex}
+%\begin{multicols}{2}
+\begin{appendices}
+% \addchap{Anhang}
+\chapter{Anhang}
+\label{chap:anhang}
+\input{sections/anhang.tex}
 
-% \end{appendices}
+\end{appendices}
 %
 %\subsubsection*{cpu.c aus LinuxSiggraph 2011: Occlusion culling in Alan Wake 2.6.16}\label{•}.cpu}\lstinputlisting[language=C]%{code/cpu.c}
 %\end{multicols}
