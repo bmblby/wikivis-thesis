@@ -4,36 +4,88 @@
 % Kapitel \ref{chap:daten} gibt einen "Uberblick "uber gr"o"se und Struktur der genutzten Datens"atze um nachvollziehen zu k"onnen welche Daten visualisiert werden.
 In diesem Kapitel wird auf die gewählte Darstellung von Kategorien eingegangen und welche Interaktionsmöglichkeiten die Visualisierung bietet.
 Darüber hinaus wird verdeutlicht, welche nicht sichtbaren Veränderungen während der Laufzeit des Programms an den Daten vorgenommen werden.
-Die in Kapitel \ref{chap:daten} eingeführten Datensätze werden in diesem Kapitel vertiefend erklärt. Auf dieser Basis wird gezeigt, wie sie zur visuellen Repräsentation verknüpft werden.
-Im Gegensatz zur Visualisierung des Projekts \emph{Visual Text Analytics} stehen die Verbindungen zwischen den Kategorien im Mittelpunkt der angestrebten Darstellung.
-Der Ansatz, möglichst viele Artikel und ihre Ähnlichkeiten abzubilden, wurde verworfen, da über den direkten Zugang zu den Artikeln die Menge an Vergleichen zwischen den Artikeln so groß würde, dass eine vereinfachte, überschaubare Darstellung der Informationen schwerlich gelingen könnte.
-Stattdessen sollen die Kategorien einen abstrakteren Zugang zu den Artikeln schaffen, die Übersichtlichkeit stärken und die Auswahl an Artikeln auf ein Themengebiet beschränken.
+In diesem Kapitel werden die beschriebenen Datensätze aus Kapitel \ref{chap:daten} weiter dargelegt und mit ihrer visuellen Repräsentation verknüpft.
 
-% notizen  was muss rein
+Im Gegensatz zur Visualisierung aus dem Projekt \emph{Visual Text Analytics} stehen die Verbindungen zwischen den Kategorien im Mittelpunkt der angestrebten Darstellung.
+Der Ansatz aus dem vorangegangenen Projekt, möglichst viele Artikel und ihre Ähnlichkeiten abzubilden, führt zu einer unüberschaubaren Menge an Vergleichen, die wiederum in einer Undurchsichtigkeit der dargestellten Elemente resultiert (\emph{visual clutter}).
+In dieser Arbeit wird ein neuer Ansatz verfolgt, welcher sich auf Kategorien fokussiert.
+Die Kategorien sollen einen abstrakteren Zugang zu den Artikeln schaffen, die Übersichtlichkeit stärken und die Auswahl an Artikeln auf ein Themengebiet beschränken.
+
+%  Vorhaben, eine geeignete Darstellungsform der Kategorienstruktur zu finden, folgend wird diese Struktur analysiert.
+% % Die Voraussetzung dafür ist die Analyse der Kategorienstruktur der Wikipedia 
 Der Grundgedanke der Arbeit liegt in der Annahme, die Kategorienstruktur als Hierarchie von Abstraktionsebenen zu interpretieren.
-Dabei sollen Kategorien, die in der Hierarchie höher sind, also näher am Stammverzeichnis liegen, Themengebiete prägnant beschreiben. Die Kategorien, welche in der Hierarchie weiter unten stehen, sollen hingegen eine ausführlichere Beschreibung des Gegenstands bieten.
-Diese Annahme wird durch die vermeintliche Ordnung unterstützt, die aus den Kategorien selbst hervorgeht.
-Wesentlich für die Hierarchie ist die Bestimmung eines Stammverzeichnisses der Kategorien.
-Wichtige Eigenschaften für ein Stammverzeichnis sind die grundlegende Betrachtung von Artikelseiten, als auch eine Betrachtung der Abstraktionsebene, welche maximal viele weit gefasste Themengebiete als Unterkategorie eingetragen hat.
-Die Wikipedia markiert die Kategorie \emph{Contents} \footnote{\url{https://en.wikipedia.org/wiki/Category:Contents}} als Stammverzeichnis aller Kategorieseiten. Diese Seite ist gleichwohl ungeeignet für die Nutzung als Stammverzeichnis, da in ihr auch Kategorien aus Namensräumen außerhalb der Artikelseiten eingetragen sind.
-In dieser Arbeit wird die Kategorie \emph{Main Topic Classifications} \footnote{\url{https://en.wikipedia.org/wiki/Category:Main_topic_classifications}} als Stammverzeichnis gewählt.
-In ihren Unterkategorien sind hauptsächlich Artikelseiten eingetragen und die Unterkategorien, welche die Wikipedia enthält, unterteilen sie in 22 Themengebiete.
-Folglich erfüllt sie alle zuvor verlangten Eigenschaften.
-Die zweite Eigenschaft, neben dem Stammverzeichnis für eine hierarchisches Modell, ist die Ordnung der Kategorien untereinander.
-Auf der Seite \emph{Main Topic Classifications} wird darauf hingewiesen, das die Kategorienstruktur nicht als strikt hierarchisch verstanden werden soll. Daraus lässt sich schließen, dass Kategorien in einem Graph miteinander verbunden sind.
-Die genauere Betrachtung der Verbindungen der Kategorien veranschaulicht ihren Charakter.
-Besteht eine Verbindung zwischen zwei Kategorien, werden diese jeweils in der anderen eingetragen.
-Diese Verbindung geschieht nicht gleichberechtigt, sondern besitzt eine Gewichtung. Denn die eingetragene Kategorie wird entweder als Unterkategorie oder als Oberkategorie eingetragen.
-Daraus lässt sich folgern, dass der Graph, bestehend aus Verbindungen zwischen Kategorien, ein gerichteter Graph ist.
-In einem weiteren Schritt wird der gerichtete Graph traversiert und die Kategorien werden in Form eines Baums konstruiert. Dabei sollen die Kanten verworfen werden, welche die Kategorien einer Ebene mit einer höheren Ebene verbinden.
-Das Kapitel \nameref{chap:Implementierung} schildert den verwendeten Algorithmus, welcher aus dem gerichteten Graphen ein Baumdiagramm konstruiert.
-Dieser Kategorienbaum, in dem die Hierarchie der Kategorien modelliert wird, ermöglicht eine \emph{Top-Down} -Struktur \footnote{\url{https://de.wikipedia.org/wiki/Top-down_und_Bottom-up}} von Kategorien hin zu einzelnen Artikeln.
-Der \emph{Top-Down}-Ansatz entspricht dem Kerngedanken der Exploration der Datensätze. Im Folgendem wird die visuelle Umsetzung dieses Ansatzes erläutert.
+Diese Annahme soll durch eine Analyse der Kategorienstruktur überprüft werden.
+Auf der Wikipedia-Seite \emph{Main Topic Classifications} \footnote{\url{https://en.wikipedia.org/wiki/Category:Main_topic_classifications}} wird darauf hingewiesen, dass die Kategorienstruktur nicht als strikt hierarchisch verstanden werden soll.
+Daraus lässt sich schließen, dass Kategorien in einem Graph miteinander verbunden sind.
+Die genauere Betrachtung der Beziehungen zwischen den Kategorien verdeutlicht ihre Eigenschaft.
+Besteht eine Verbindung zwischen zwei Kategorien, werden diese jeweils in der anderen Kategorie als Unterkategorie oder als Oberkategorie eingetragen. 
+Daraus lässt sich folgern, dass der Graph, bestehend aus Verbindungen zwischen Kategorien, ein gerichteter Graph ist und so einer gewissen Ordnung folgt.
 
-% \begin{itemize}
-%     \item Layoutalgorithmus f"ur Knoten (Eades Free Tree)
-%     \item Anordnung der Beschriftungen der Kategorien
-% \end{itemize}
+Nun soll, ausgehend von einem bestimmten Stammverzeichnis, ein Pfad von Unterkategorien beispielhaft erkundet werden.
+Dies soll die verschiedenen Stufen der Abstraktion eines Themengebiets anhand von Unterkategorien verdeutlichen.
+Die Analyse der Wikipedia-Seite der Kategorie \emph{Main topic classifications} und deren Unterkategorien zeigt, dass die Kategorien, die näher zum gewählten Stammverzeichnis liegen, Themengebiete eher umfassend beschreiben.
+Die Kategorien, die weiter vom Stammverzeichnis entfernt sind, umschreiben hingegen einen Gegenstand ausführlicher.
+Auf Grund dieser Beobachtung wird davon ausgegangen, dass die Kategorienstruktur einer thematischen Ordnung bzw. einer thematischen Hierarchie folgt. 
+Diese Ordnung der Kategorien wird noch einmal in Abbildung \ref{fig:main-topic-tree} verdeutlicht.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \end{tikzpicture}
+    \caption{Ausschnitt der Kategorienstruktur ausgehend von der Kategorienseite \emph{Main topic classifications}}
+    \label{fig:main-topic-tree}
+\end{figure}
+
+Die Konstruktion eines Baumes, der die Hierarchie abbilden soll, ist kein triviales Problem, folgend werden zwei unterschiedliche Ansätze erklärt dieses Problem zu lösen.
+Die Ansätze unterscheiden sich dabei nicht wesentlich von einander.
+Aus den vorangegangenen Beobachtungen lässt sich folgendes schließen:\\
+Die Kategorien untereinander folgen einer Ordnung, diese wird durch die gerichteten Verbindungen zwischen Kategorien abgebildet.
+Diese Feststellung bildet die Basis um aus dem gerichteten Graphen einen Baum zu konstruieren, der die Hierarchie der Kategorien abbildet.\\
+Weiterhin besteht die Schwierigkeit, die Konstruktion von Schleifen für einen Kategorienbaum aus dem Kategoriengraph heraus zu verhindern und somit zu entscheiden welche Kanten aus dem gerichteten Graphen im Baum bestehen bleiben.
+Als Ansatz soll ausgehend von eine gewählten Startkategorie der gerichtete Graph mit einer Breitensuche traversiert werden.
+Dabei werden nur Knoten aus dem Graphen dem Baum hinzugefügt, die nicht bereit im Baum abgebildet sind.
+Die Knoten einer Ebene werden nur mit dem Knoten verbunden, von dem eine gerichtete Kante aus sie ausgeht.
+Auf diese Art soll gewährleistet werden das keine Schleifen während der Konstruktion des Baumes entstehen.
+In Kapitel \nameref{chap:Implementierung} wird der verwendete Algorithmus, welcher aus dem gerichteten Graphen ein Baumdiagramm konstruiert, weiter geschildert.\\
+
+% schleife erklären
+% Baumkonstruktion schleifen Problem, keine Feste Hierarchie
+% Aus diesem Grund wird beispielhaft versucht, eine  Kategorienhierarchie zu konstruieren.
+% In einem weiteren Schritt wird der gerichtete Graph traversiert und die Kategorien werden in Form eines Baums konstruiert. Dabei sollen die Kanten verworfen werden, welche die Kategorien einer Ebene mit einer höheren Ebene verbinden. 
+
+Der erste Ansatz versucht einen Kategorienbaum für \emph{alle} Wikipedia-Kategorien zu erstellen.
+Für einen vollständigen Kategorienbaum wird ein Stammverzeichnis gesucht, das zwei Eigenschaften erfüllt:\\
+Ein globales Stammverzeichnis sollte in den von ihr ausgehenden Unterkategorien ausschließlich Kategorienseiten oder Artikelseiten eingetragen haben.
+Zusätzlich sollte ein Stammverzeichnis so gewählt werden, dass möglichst viele Themengebiete direkt oder in Unterkategorien enthalten sind.
+Die Wikipedia markiert die Kategorie \emph{Contents} \footnote{\url{https://en.wikipedia.org/wiki/Category:Contents}} als Stammverzeichnis aller Kategorienseiten.
+Diese Seite ist gleichwohl ungeeignet für die Nutzung als Stammverzeichnis, da in ihr auch Kategorien aus Namensräumen außerhalb der Artikelseiten eingetragen sind.
+Ausgehend von der Stammkategorie \emph{Contents} über die Unterkategorie \emph{Articles}  gelangt man zur Unterkategorie \emph{Main topic classifications}.
+In ihren Unterkategorien sind hauptsächlich Artikelseiten eingetragen. 
+Die direkten Unterkategorien enthalten 22 unterschiedliche Themengebiete die den Inhalt der Wikipedia abbilden.
+In dieser Arbeit wird die Kategorie \emph{Main Topic Classifications} \footnote{\url{https://en.wikipedia.org/wiki/Category:Main_topic_classifications}} als globales Stammverzeichnis für alle Kategorien gewählt.\\
+
+Sucht ein Nutzer nach einer Kategorie, ist es nun möglich ihm einen Ausschnitt der vollständigen Hierarchie, von der gesuchten Kategorie aus beginnend, darzustellen.
+Das Problem der dargestellten Hierarchie ist, dass es bestimmte Verbindungen mit der gesuchten Kategorie oder ihren Unterkategorie nicht dargestellt werden, weil sie in einem anderen Pfad der vollständigen Hierarchie abgebildet sind.
+In Abbildung \ref{fig:two-trees} wird diese noch einmal verdeutlicht.
+
+\begin{figure}
+    \centering
+    \includegraphics{images/todobild.pdf}
+    \caption{Es werden zwei Kategorienbaum für die Wurzelkategorie \emph{History angezeigt}, konstruiert mit den unterschiedlichen Anstäzen aus der \ref{chap:visualization}}
+    \label{fig:two-trees}
+\end{figure}
+
+Der zweite Ansatz versucht diesen Fehler in der Darstellung einer Hierarchie aus dem gerichteten Graphen, zu mindern.
+Sucht der Nutzer nach einer Kategorie wird, wie bereits am Anfang des Kapitels beschrieben mit der Breitensuche und festgelegten Bedingungen ein neuer Kategorienbaum konstruiert.
+Diese unterscheidet sich vom Ausschnitt des Kategorienbaums der vollständigen Hierarchie aus dem ersten Ansatz, diese soll mit der Abbildung \ref{fig:two-trees} veranschaulicht werden.
+Dabei ist die Anzahl an Verbindungen die im zweiten Kategorienbaum abgebildet werden an den tatsächlichen Verbindugnen des gerichteten Graphen für die Wurzelkategorie, als in dem Ansatz mit der vollständigen Hierarchie.
+Dieser Kategorienbaum bildet eine genaueres Abbild der Hierarchie für die gewählte Wurzelkategorie ab.
+Dabei sollte beachtet werden, dass die dargestellte Hierarchie immer nur eine Interpretation des gerichteten Graphen ist.
+
+In beiden fällen wird jedoch mit der Hierarchie der Kategorien ein \emph{Top-Down}-Struktur \emph{\url{https://de.wikipedia.org/wiki/Top-down_und_Bottom-up}} modelliert, welche genutzt werden soll um Themengebiete zu erkunden.
+In dem Abschnitt \ref{subchap: filter-vis} wird erklärt wie die \emph{Top-Down}-Exploration genutzt wird um auf Artikel zuzugreifen, dieser Ansatz spielt dabei die Grundlegende Rolle in der Selektion der Artikel.
+In den folgenden Abschnitten wird auf die visuelle Umsetzung und Interkation der Arbeit eingegangen.
+
 \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -49,114 +101,161 @@ Der \emph{Top-Down}-Ansatz entspricht dem Kerngedanken der Exploration der Daten
     \node[red, below] at (three.south) {(d)};
     \end{tikzpicture}
     \caption{Darstellung der Kategorie \emph{Computer science} im Zentrum des radialen Graphen.
-    Es sind die Unterkategorien mit einer Tiefe von eins, mit der Stammkategorie verbunden und sichtbar.\\ (a) Hauptfenster, (b) zusammenfassende Statistik über vorhandene Daten, (c) Suchleiste, (d) Regler zur Änderung des Schwellwerts}
+    Es sind die Unterkategorien mit einer Tiefe von eins mit der Stammkategorie verbunden und sichtbar.\\ (a) Hauptfenster, (b) zusammenfassende Statistik über vorhandene Daten, (c) Suchleiste, (d) Regler zur Änderung des Schwellwerts}
     \label{fig:small-start}
 \end{figure}
 
-\section{Layout}
-Es gibt verschiedene Möglichkeiten Bäume anzuordnen, bekannte Methoden sind die horizontale oder vertikale Ausrichtung des Baumes.
-In dieser Arbeit wurde sich dazu entschlossen den Baum radial anzuordnen, da auf diese Weise gewährleistet wird, das der verfügbare Platz optimal genutzt wird. \footnote{\cite[Kapitel 5, p.~123]{lima2014book}}
 
-% Einführend zu diesem Kapitel wird auf die Taxonomie von Kreisdarstellungen nach \cite[p.~57]{lima2017circle} eingegangen.
-% Lima beschreibt zwölf wesentliche Merkmale von Kreisen, dabei gehen wir nur auf Merkmale ein die eine zentrale Rolle in der Visualisierung einnehmen.
+\section{Layout} \label{subchap:layout}
 
-Im Folgendem werden die Merkmale für Kresidarstellungen aus der Taxonomie von Kreisen nach \cite[p.~57]{lima2017circle} genutzt.
-Kategorien werden als Knoten in Form von blau gefärbten Kreisen dargestellt.
-Verbindungen zwischen Kategorien werden als Kanten in Form von schwarze Linien zwischen zwei Knoten dargestellt.
-Nachstehend wird der Begriff der Kategorie stellvertretend für die visuelle Form eines Knoten genutzt.
-Die im Zentrum des Baumes liegende Kategorie repräsentiert die Stammkategorie und wird auch Wurzel genannt, alle dargestellten Knoten sind durch Kanten mit Ihr verbunden.
-Kategorien die keine Unterkategorien besitzen werden Blattkategorien gennant.
-Die Unterkategorien der Wurzelkategorie werden auf konzentrischen Ringen um die Wurzelkategorie angeordnet, dabei haben alle Unterkategorien die auf einem Ring liegen die gleiche Distanz zur Wurzelkategorie.
-Die Distanz zwischen zwei Kategorien wird festgelegt durch die Anzahl an Kanten, die auf dem kürzestem Pfad zwischen den beiden Kategorien liegen, sie wird auch als Tiefe der Kategorie umschrieben.
-Kozentrische Ringe haben auch eine Tiefe zur Wurzelkategorie.
-Die Anzahl an konzentrischen Ringen wird bestimmt durch die tiefste dargestellte Kategorie.
-Die Anzahl an Sektoren wird bestimmt durch die Anzahl an von Unterkategorien der Tiefe eins, die Breite eines Sektors wird bestimmt durch die Anzahl an Blattkategorien die Nachfolger einer Unterkategorie der Tiefe eins sind.
-
-
-
-Der Begriff Tiefe wird genutzt, da ausgehend von der Wurzelkategorie die 
-Die Wurzelkategorie ist auch immer die initiale Kategorie nach der gesucht wurde.
-Allen voran ist die konzentrische Ausrichtung der 
+In dieser Arbeit werden Ausschnitte der Kategorienstruktur der Wikipedia, welche sich insgesamt auf etwa $1.4$ Millionen Seiten beläuft, siehe Tabelle \ref{tab:xml-overview}, dargestellt.
+Wie einleitend in diesem Kapitel beschrieben, werden die Kategorien der Wikipedia als hierarchischer Baum modelliert.
+Die Veränderung der Baumdarstellung durch Hinzufügen von Knoten wird möglich gemacht. 
+Es gibt verschiedene Möglichkeiten, Bäume anzuordnen. 
+Bekannte Methoden sind die horizontale oder vertikale Ausrichtung von Baumdarstellungen.
+Die enorme Menge an möglichen Kategorien, die dargestellt werden können, erfordert eine Methode, welche den vorhandenen Platz des Bildschirms voll ausschöpft und dabei die Anordnung von Knoten in einer vertretbaren Zeit berechnet.
+Dabei wird die hierarchische Struktur eines Baumes abgebildet und die Veränderung der Darstellung durch Hinzufügen von weiteren Knoten ermöglicht.
+Hierfür werden zwei Ansätze ausprobiert, welche nachfolgend erläutert werden.\\
+Der erste Versuch wurde mit dem Algorithmus nach Fruchtermann et al. \cite{fruchterman1991graph} implementiert.
+In dieser Arbeit wird eine Implementierung des Algorithmus' aus der Bibliothek der \emph{Boost Graph Library} \footnote{\url{http://www.boost.org/doc/libs/1_65_1/libs/graph/doc/index.html}} verwendet. Die Standardeinstellungen der Parameter des Algorithmus wurden beibehalten.
+In diesem Versuch stellt sich heraus, dass die Berechnung der Knoten anhand eines physikalischen Modells ab einer gewissen Größe zu rechen- und zeitintensiv wird, sodass keine Interaktion mit der Darstellung möglich ist.
+Ein weiteres Problem dieses Ansatzes ist die Positionierung der Knoten selbst.
+Aus der Anordnung der Knoten nach dem Algorithmus von Fruchtermann et al. lässt sich schwer die hierarchische Struktur der Kategorien erkennen. 
+Folglich ist der Algorithmus in dieser Form nicht optimal für die Darstellung des Kategorienbaums.
+Auf Grund dieser Defizite wurde der Ansatz nicht weiter verfolgt.
 
 
+Der zweite Ansatz versucht die Anordnung der Knoten des Kategorienbaums mit dem Algorithmus nach Eades \cite{eades1991drawing} zu realisieren.
+Die Positionierung der Knoten erfolgt in einem polaren Koordinatensystem, dabei stellt die Wurzelkategorie den Ursprung dieses Systems dar.
+Die Distanz und der Winkel zum Ursprung geben die Position eines Knotens an.
+Der Algorithmus ermöglicht, dass jegliche Knoten einer Baumdatenstruktur als Wurzel für die Darstellung gewählt werden können. Anhand des ausgesuchten Knotens werden alle anderen Knoten in konzentrischen Ringen um den Wurzelknoten angeordnet.
+Die Größe eines Sektors innerhalb des polaren Koordinatensystems, welche für einen Teilbaum belegt wird, ist davon abhängig, wie viele Knoten sich in dem Teilbaum befinden.
+Ausschlaggebend für die Größe des Sektors ist dabei die Anzahl an Blattknoten des jeweiligen Teilbaums, siehe dazu Eades \cite[S.~15]{eades1991drawing}.
+Der Algorithmus garantiert, dass die Anordnung des Baumes "planar" ist, also keine Überlappungen entstehen. \cite[S.~16]{eades1991drawing}.
+Der Algorithmus erfüllt dabei die oben beschriebenen Voraussetzungen zur Darstellung des Kategorienbaumes.
 
-% Notizen ingnorieren =================
-% Ebene --> ringe!!
-% Warum ein radiales Layout? warum konzentrisch, Welche Eigenschafte  sind gefragt und welche werden erfüllt.
-% Ausnutzen des gesamte Raums?
-% Konkrete Struktur des Kategorienbaums ist nicht klar.
+% In dieser Arbeit wurde sich dazu entschlossen den Baum radial anzuordnen, da auf diese Weise gewährleistet wird, das der verfügbare Platz optimal genutzt wird. \footnote{\cite[Kapitel 5, p.~123]{lima2014book}}
+% Die radiale Anordnung von Knoten und Kanten eines Baumes wird durch den Algorithmus nach Eades \cite{eades1991drawing} realisiert.
+% Der Algorithmus muss dabei bestimmte Kriterien erfüllen, wie eine minimale Überlappung an Knoten und Kanten um eine Überhäufung wie im Vorgänger Porjekt zu vermeiden.
+% Des Weiteren sollte der Algorithmus, 
 
-% Wie funktioniert der Algorithmus von Eades?
-% fokus aug Knoten statt Kanten.
-% Strategie der beschriftung der Knoten.
-%  ====================================
+Im Folgendem werden die Merkmale für Kreisdarstellungen aus der Taxonomie von Kreisen nach \cite[p.~57]{lima2017circle} genutzt, um den dargestellten Baum zu erläutern.\\
+Wikipedia-Kategorien werden als Knoten in Form von blau gefärbten Kreisen dargestellt.
+Verbindungen zwischen Wikipedia-Kategorien werden als Kanten in Form einer weißen Linie zwischen zwei Knoten dargestellt.
+Nachfolgend wird der Begriff der Kategorie stellvertretend für die visuelle Form eines Knotens genutzt.
+Die im Zentrum des Baumes liegende Kategorie repräsentiert die Stammkategorie und wird auch Wurzel genannt.
+Alle dargestellten Knoten sind durch Kanten mit ihr verbunden.\\
+Kategorien, die keine Unterkategorien besitzen, werden Blattkategorien genannt.
+Die Distanz zwischen zwei Kategorien wird durch die Anzahl an Kanten festgelegt, die auf dem kürzesten Pfad zwischen den beiden Kategorien liegen.
+Die Distanz einer Kategorie zur Wurzelkategorie wird auch als Tiefe bezeichnet.
+Die Unterkategorien der Wurzelkategorie werden auf konzentrischen Ringen um die Wurzelkategorie angeordnet, welche auch als Kategorienebene bezeichnet wird.
+Alle Unterkategorien einer Kategorienebene besitzen die gleiche Distanz zur Wurzelkategorie.
+Die Anzahl an konzentrischen Ringen wird durch die tiefste dargestellte Kategorie bestimmt.
+In Abbildung \ref{fig:small-start} wird die Visualisierung des Kategorienbaums mit einer Tiefe von eins dargestellt.
 
+Die Größe einer Kategorie wird an der Anzahl an direkten Artikeln, die in der Kategorie eingetragen sind, gemessen.
+Die Anzahl an Artikeln kann direkt auf die Größe des Knotens der Kategorie übertragen werden, wie in Abbildung \ref{fig:cat-size-direct} dargestellt.
+Jedoch ist dies nicht wünschenswert, da so ein Teil der Elemente des Kategorienbaums überzeichnet wird.
+Es muss eine Darstellungsform gefunden werden, bei der die Größe der Knoten einen festgelegten Wert nicht überschreitet. 
+In Abbildung \ref{fig:cat-size-fixed} wird dies dargestellt.
+Der Unterschied in der Größe der Knoten soll dem Nutzer eine weitere grundlegende Information über die Kategorien liefern: die Anzahl an Artikeln.
+Dabei ist in Abbildung \ref{fig:cat-size-fixed} zu erkennen, dass es irritierend sein kann, dass nicht die Wurzelkategorie den größten Knoten darstellt.
+Dies liegt daran, dass die Anzahl der Artikel nicht für die Unterkategorien einer Kategorie aufsummiert wird, da zuvor festgelegt wurde nur die direkten Artikel, welche in einer Kategorie eingetragen sind, zu zählen.
 
+\begin{figure}
+    \centering
+    \includegraphics{images/todobild.pdf}
+    \caption{Die Anzahl der Artikel einer Kategorie wird direkt auf die Größe des Knotens der Kategorie übertragen}
+    \label{fig:cat-size-direct}
+\end{figure}
 
+\begin{figure}
+    \centering
+    \includegraphics{images/todobild.pdf}
+    \caption{Durch eine festgelegte Funktion wird die Anzahl der Artikel einer Kategorie auf einen Wert abgebildet, welcher den Durchmesser des Knotens darstellt}
+    \label{fig:cat-size-fixed}
+\end{figure}
 
-
-
+Die Beschriftung von Knoten ist notwendig, um die Knoten als Kategorien sichtbar zu machen und auch ohne Interaktion von Seiten des Nutzers bereits Informationen über den Kategorienbaum zu liefern.
+Die Beschriftung erfolgt dabei für alle Blattkategorien der Darstellung und erlaubt eine Untersuchung der benachbarten Kategorien.
+Für den Fall, dass eine bestimmte Kategorie von Interesse ist und sie expandiert wird, werden ihre Unterkategorien beschriftet.
+In Abschnitt \ref{subchap:interaktion} wird die Interaktion durch eine Expansion weiter im Detail beschrieben.\\
+Die Anordnung der Titel einer Kategorie erfolgt gleich dem Winkel des Knotens der Kategorie.
+Durch diese Anordnung sind Knoten mit einem Winkel über 90 \textdegree und unter 270 \textdegree nur schwer leserlich oder gar kopfüber angeordnet.
+Abschnitt \ref{subchap:interaktion} beschreibt eine Methode, die Lesbarkeit der Titel zu erleichtern.
+% Die Wurzelkategorie im Zentrum des Kategorienbaums stellt dabei die gesuchte Kategorie 
+% Lima beschreibt zwölf wesentliche Merkmale von Kreisen, dabei gehen wir nur auf Merkmale ein, die eine zentrale Rolle in der Visualisierung einnehmen.
 
 
 \begin{figure}
     \centering
     \includegraphics[scale=.5]{images/small-start-wrong-cat-1.png}
-    \caption{Ein Nutzer hat bereits nach einer Kategorie gesucht, welche nicht in der Datenbank gefunden wurde. Der Nutzer wird durch die Graphische Benutzeroberfläche aufgefordert die Suche zu wiederholen.}
+    \caption{Ein Nutzer hat bereits nach einer Kategorie gesucht, welche nicht in der Datenbank gefunden wurde. Der Nutzer wird durch die grafische Benutzeroberfläche aufgefordert, die Suche zu wiederholen.}
     \label{fig:wrong-cat}
 \end{figure}
 
-% \begin{itemize}
-%     \item Expansion von Kategorien
-%     \item Schwellwert f"ur "Ahnlichkeitswerte
-%     \item Navigation
-% \end{itemize}
-\section{Interaktion}
-Die Interaktionen mit der Visualisierung lassen sich in zwei Gruppen einteilen, ein Nutzer kann entweder mit der graphischen Benutzeroberfläche interagieren, in Abbildung \ref{fig:small-start} mit (c) und (d) markiert oder ein Nutzer interagiert direkt mit den Inhalten im Hauptfenster in der Abbildung gekennzeichnet mit (a).
-Nachfolgend werde sollen die Möglichkeiten erläutert werden.
+\section{Interaktion} \label{subchap:interaktion}
+Die Interaktionen mit der Visualisierung lassen sich in zwei Gruppen einteilen. Ein Nutzer kann entweder mit der grafischen Benutzeroberfläche interagieren, wie in Abbildung \ref{fig:small-start} mit (b), (c) und (d) markiert, oder direkt mit den Inhalten im Hauptfenster, wie in der Abbildung mit (a) gekennzeichnet.
+Nachfolgend werden die Möglichkeiten der Interaktion erläutert.
 
-\paragraph{Graphische Benutzeroberfläche}
-Das Element (c) aus der Abbildung \ref{fig:small-start} ist Teil der graphischen Benutzeroberfläche und stellt eine Suchleiste für alle Kategorien der Wikipedia da.
-Die Suchleiste ist dabei aus drei Elementen aufgebaut, dem Suchformular, dem Eingabefeld für die Tiefe und eine Schaltfläche.
-In der Suchleiste kann der Name einer möglichen Kategorie eingegeben werden, drück ein Nutzer nach der Eingabe einer Kategorie die Schaltfläche "`Go!"' wird eine Suchanfrage mit der eingegebenen Kategorie an die Datenbank weitergeleitet.
-Existiert keine Kategorie unter dem eingegebenem Namen, wird die Schaltfläche "'Go!"` rot gefärbt und der Nutzer aufgefordert eine andere Kategorie einzugeben.
-Existiert die Kategorie stattdessen in der Datenbank wird ein Kategorienbaum mit der Anzahl an Ebenen, welche im Eingabefeld für die Tiefe eingetragen ist gezeichnet und mit der gesuchten Kategorie im Zentrum dargestellt.
-Das Eingabefeld für die Tiefe des Kategorienbaums kann durch Eingabe des Nutzers verändert werden, dies ist über die Tastatur oder über die Pfeile im Eingabefeld möglich.
-Die Zahl legt die minimale Tiefe des Kategorienbaums fest, dies bedeutet, dass den Blattkategorien solange Unterkategorien hinzugefügt werden, bis sie die eingegebene Tiefe erreichen.
-Daraufhin ist die Distanz zwischen  Blattkategorien und der Wurzelkategorie mindestens so groß wie die eingegebene Tiefe, die Expansion der Blattkategorien wird durch drücken der Schaltfläche "`Go!"' bestätigt.
-Dabei bleiben bereits gezeichnete Kategorien die Tiefer sind als die Eingabetiefe unverändert in der Visualisierung.
+\paragraph{Grafische Benutzeroberfläche}
+Element (b) aus Abbildung \ref{fig:small-start} ist ein passives Interaktionselement, da es Informationen nur anzeigt und nicht direkt durch den Nutzer verändert werden kann.
+Das Element besteht aus vier Zeilen, welche Informationen über den aktuellen Kategorienbaum innerhalb des Hauptfensters (a) zur Verfügung stellen.
+In der ersten Zeile wird der Titel der letzten Kategorie angezeigt, über die ein Nutzer den Mauszeiger platziert hat.
+Hierdurch wird die Option geschaffen, Titel unbeschrifteter Kategorien zu erfahren.
+Die zweite und dritte Zeile zeigen die aktuelle Anzahl der Kategorien und Artikel des Kategorienbaums an.
+Es werden hierbei alle Artikel gezählt, welche direkt in Kategorienseiten eingetragen sind. Artikel, die mehrfach in unterschiedlichen Kategorien vorkommen, werden nur einmal berücksichtigt.
+Die letzte Zeile des Elements (b) beschreibt die Anzahl an Artikelpaaren, die über dem festgelegten Schwellwert aus Element (d) liegen.
+Die erste Zahl stellt dabei die Anzahl an Artikelpaaren dar, von denen beide Artikel einer Kategorie angehören, die auch im dargestellten Kategorienbaum zu finden ist.
+Die zweite Zahl hingegen beschreibt die Artikelpaare, in denen nur einer der beiden Artikel in einer Kategorie des Kategorienbaums dargestellt wird.
+Diese zwei Varianten von Artikelpaaren werden im Rahmen dieser Arbeit \emph{lokale} bzw. \emph{globale} Vergleiche von Artikeln genannt.
+Auf dieses Konzept wird in Abschnitt \ref{subchap: filter-vis} weiter eingegangen.
 
-Das andere Elemente der Graphischen Benutzeroberfläche ist der Regler zur Veränderung des Schwellwertes der Ähnlichkeitswerte, in Abbildung \ref{fig:small-start} gekennzeichnet mit (d).
-Das Element besteht dabei aus zwei Feldern, einem Schieberegler und einem Zahlenfeld um den eingestellten Wert ablesen zu können.
-Der Schieberegler ändert an erster Stellen keine sichtbaren Schwellwert sondern gibt eine Grenze an für den Datensatz von Artikelähnlichkeiten an.
-Der Schieberegler stellt dabei die Mindestgröße für Ähnlichkeitswerte ein, die der Ähnlichkeitswert zwischen zwei Artikel überschreiten muss.
-Artikelpaare mit einem Ähnlichkeitswert die niedriger sind als der Schwellwert werden nicht in Betracht gezogen.
-% Die Veränderung des Schiebereglers ändert neben dem Schwellwert auch die Farbe Knoten von blau nach gelb.
-Der visuelle Effekt des Schieberegler ist die Färbung von Knoten von blau nach gelb.
-Kategorien werden gelb gefärbt wenn Artikel darin eingetragen sind, die eine Ähnlichkeit zu einem Artikel aus einer dargestellten Kategorie besitzten, die höher oder gleich dem Schwellwert ist.
-Der Schieberegler zeigt damit die Kategorien an, die Artikelpärchen eingetragen haben mit einer Ähnlichkeit über oder gleich dem Schwellwert.
-Diese Form der Filterung der dünn besetzten Ähnlichkeitsmatrix, nennen wir horizontale Siebung, abbildung  soll dies Verdeutlichen.
+Das Element (c) aus der Abbildung \ref{fig:small-start} ist Teil der grafischen Benutzeroberfläche und stellt eine Suchleiste für alle Kategorien der Wikipedia dar.
+Die Suchleiste ist dabei aus drei Elementen aufgebaut, wie in Abbildung \ref{fig:wrong-cat} dargestellt.: dem Suchformular (1), dem Eingabefeld für die Tiefe (2) und einer Schaltfläche (3).\\
+In der Suchleiste kann der Name einer möglichen Kategorie als Suchbegriff eingegeben werden.
+Betätigt ein Nutzer nach der Eingabe einer gesuchten Kategorie die Schaltfläche "`Go!"', wird eine Suchanfrage mit dem eingegebenem Begriff an die Datenbank weitergeleitet.
+Existiert keine Kategorie mit dem eingegebenen Begriff, wird die Schaltfläche "'Go!"` rot gefärbt und der Nutzer aufgefordert, eine andere Kategorie einzugeben, siehe Abbildung \ref{fig:wrong-cat}.
+Existiert die Kategorie allerdings in der Datenbank, wird ein Kategorienbaum nach den festgelegten Parametern gezeichnet.
+Der im Eingabefeld eingetragene Tiefen-Wert legt dabei die Anzahl der Ebenen fest.
+Die gesuchte Kategorie wird zum Zentrum der Darstellung.
+Das Feld für die Tiefe des Kategorienbaums kann durch Eingabe des Nutzers verändert werden.
+Die Eingabe einer Zahl wird durch die Tastatur oder über die Pfeile im Eingabefeld ermöglicht.
+Mit dem Tiefen-Wert wird die maximale Tiefe des Kategorienbaums, bis zu welcher die Blattkategorien mit einem niedrigerem Tiefenwert expandiert werden sollen, festgelegt.
+Sollten Unterkategorien mit einem höheren Tiefenwert in der Darstellung angezeigt werden, betrifft sie diese Interaktion nicht.
+Demzufolge ist die Distanz zwischen Blattkategorien und der Wurzelkategorie mindestens so groß wie die eingegebene Tiefe.
+Die Expansion der Blattkategorien wird durch Betätigung der Schaltfläche "`Go!"' ausgeführt.
+Dabei bleiben bereits gezeichnete Kategorien der Visualisierung unverändert, sofern sie tiefer als die Eingabetiefe sind.
+
+Das andere Element der grafischen Benutzeroberfläche ist der Regler, mit dem ein Schwellwert für Ähnlichkeiten festgelegt wird.
+Dieser wird in Abbildung \ref{fig:small-start} mit (d) gekennzeichnet.
+Das Element besteht dabei aus zwei Feldern, einem Schieberegler und einem Zahlenfeld, an dem der eingestellte Wert abgelesen werden kann.
+Der Schieberegler stellt dabei die Mindestgröße ein, die der Ähnlichkeitswert zwischen zwei Artikeln überschreiten muss um dargestellt zu werden.
+Artikelpaare mit einem Ähnlichkeitswert, der niedriger ist als der Schwellwert, werden nicht in Betracht gezogen.
+% Die Veränderung des Schiebereglers ändert neben dem Schwellwert auch die Farbe der Knoten von blau nach gelb.
+Der Schieberegler beeinflusst aber nicht nur die Selektion der Daten aus der Ähnlichkeitsmatrix, sondern auch das Erscheinungsbild der Visualisierung.
+Kategorien werden gelb gefärbt, wenn die darin eingetragenen Artikel eine Ähnlichkeit zu einem Artikel aus einer bereits dargestellten Kategorie aufweisen, die höher oder gleich dem Schwellwert ist.
+Der Schieberegler zeigt folglich die Kategorien an, unter denen Artikelpaare mit einer Ähnlichkeit über oder gleich dem Schwellwert eingetragen sind.
+Diese Form der Selektion der dünn besetzten Ähnlichkeitsmatrix, nennen wir horizontale Filterung.
+Abbildung \ref{fig:simM-threshold-cat} soll dies verdeutlichen.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/threshold-7033-lvl3}
-    \caption{Färbung von Kategorien über dem Schwellwert, Eingabe des Schwellwertes}
+    \caption{Färbung von Kategorien über dem Schwellwert, Eingabe des Schwellwerts}
     \label{fig:threshold-cat}
 \end{figure}
 
-\begin{figure}
-    \begin{tikzpicture}
-    \end{tikzpicture}
-    \caption{Darstellung der filterung der Ähnlichkeitsmatrix die durch den Schwellwert entstehen}
-    \label{fig:simM-threshold-cat}
-\end{figure}
 
 \paragraph{Hauptfenster}
-Mit dem Hauptfenster wird der Bereich gemeint der in Abbildung \ref{fig:small-start} mit (a) markiert ist, ausschließlich der Elemente (c) und (d).
-In dem Hauptfenster wird der Kategorienbaum als Knoten und Kanten Diagramm dargestellt und ist die Hauptdarstellung der Visualisierung.
-Es bestehen verschiedene Möglichkeiten mit dem Kategorienbaum zu interagieren, die Verschiebung und das Vergrößern des Kategorienbaums sind vorhanden.
-Diese Interaktionen ermöglichen eine Navigation und ein Fokusierung verschiedener Knoten das Kategoriebaumes.
-Durch die radiale Anordnung der Kategorien und ihre Beschriftung in radialer Ordnung, ist es möglich den Kategorienbaum um die Wurzelkategorie zu drehen.
-Wird die Taste "`Strg"' gedrückt und das Mausrad gedreht, dreht sich der Kategoriebaum entsprechend mit.
-Diese Interaktion soll einem Nutzer ermöglichen den Kategorienbaum so ausrichten zu können, das er im Stande ist die Beschriftung einer bestimmten Kategorie zu lesen.
+Als Hauptfenster wird der Bereich bezeichnet, der in Abbildung \ref{fig:small-start} mit (a) markiert ist.
+Davon ausgenommen sind die Elemente der grafischen Benutzeroberfläche.
+Im Hauptfenster wird der Kategorienbaum als Knoten- und Kantendiagramm dargestellt
+Der Kategorienbaum steht im Mittelpunkt der Visualisierung.
+Es bestehen verschiedene Möglichkeiten, mit dem Kategorienbaum zu interagieren:\\ 1. die Verschiebung und das Vergrößern, 2. die Rotation und 3. die Erweiterung des Kategorienbaums.\\
+Durch die Verschiebung und die Vergrößerung der Darstellung des Kategorienbaums wird dem Nutzer die Möglichkeit geschaffen den Kategorienbaum frei zu platzieren und ausgewählte Knoten zu fokussieren.
+Durch die radiale Anordnung der Kategorien und ihre Beschriftung in radialer Ordnung ist es möglich, den Kategorienbaum um die Wurzelkategorie zu drehen.
+Bei gedrückt gehaltener "`Strg"'-Taste und gleichzeitiger Drehung am Mausrad, dreht auch sich der Kategorienbaum.
+Diese Interaktion soll dem Nutzer ermöglichen, den Kategorienbaum so ausrichten zu können, dass er im Stande ist, die Beschriftung einer bestimmten Kategorie zu lesen.
 \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -164,25 +263,31 @@ Diese Interaktion soll einem Nutzer ermöglichen den Kategorienbaum so ausrichte
     {
         \includegraphics[scale=.21]{images/rotation-hist-1}&[3mm]&
         \includegraphics[scale=.21]{images/rotation-hist-2}&[3mm]&
-        \includegraphics[scale=.21]{images/rotation-hist-3} \\
+        \includegraphics[scale=.21]{images/rotation-hist-3}\\
     };
     \draw[-{Latex[length=3mm]}] (m-1-1) -- (m-1-3);
     \draw[-{Latex[length=3mm]}] (m-1-3) -- (m-1-5);
     \end{tikzpicture}
-    \caption{Der Kategoriebaum mit der Wurzelkategorie \emph{Computer science} und der expandierten Unterkategorie \emph{History of computer science} wird um 90\textdegree Grad im Uhrzeigersinn gedreht.}
+    \caption{Der Kategoriebaum für die Wurzelkategorie \emph{Computer science} und der expandierten Unterkategorie \emph{History of computer science} wird um 90\textdegree Grad im Uhrzeigersinn gedreht.}
     \label{fig:rotation-tree}
 \end{figure}
-% zwei bilder mit PFeil drehung der Kategorie
-Die Platzierung des Mauszeigers über einer bestimmten Kategorie für dazu, das der Titel der Kategorie in der zusammenfassenden Statistik in der ersten Zeile dargestellt wird, verdeutlicht in Abbildung \ref{fig:small-start} in Bereich (b).
-Auf diese Art ist es realisierbar die Titel von Kategorien anzeigen zu lassen, die keine Blattkategorien sind, ohne dabei gezeichnete Elemente zu Überlappen.
 
-Eine essenzielle Interaktion der Visualisierung ist die Expansion von gewählten Kategorien.
-Die Expansion einer Kategorie wird durch doppeltes klicken auf die Kategorie ausgeführt, dabei werden die Unterkategorien der Ausgangskategorie dem Kategorienbaum hinzugefügt und als Knoten in die Visualisierung gezeichnet.
-Die neuen Unterkategorien werden durch Kanten mit der Ausgangskategorie verbunden, in Abbildung \ref{fig:expand-cat} wird dies verdeutlicht.
-Die Expansion ermöglicht dabei einem Nutzer einen bestimmten Pfad von Unterkategorien zu erkunden und auf diese Weise eine differenziertere Erkundung der Unterkategorien eines Themengebietes.
-Es wird neben der Expansion des Kategorienbaum für alle Blattkategorien, eine feinere Interaktion zur Verfügung gestellt.
-Die Expansion, ausgehend von eine bestimmten Kategorie, ist als semantische Vertiefung zu verstehen, in der die neuen Unterkategorien eine Spezifizierung des umschriebenen Konzptes der Ausgangskategorie darstellen.
-Die Expansion stellt dabei immer ein Spezifizierung der Abstraktionsebene dar, da nur Unterkategorien dem Kategorienbaum hinzugefügt werden können.
+% zwei Bilder mit Pfeil Drehung der Kategorie
+Platziert der Nutzer den Mauszeiger über einer bestimmten Kategorie, wird ihm deren Titel in der zusammenfassenden Statistik angezeigt, wie in Abbildung \ref{fig:small-start} gezeigt.
+Somit ist es auch möglich, sich Titel von Kategorien, die keine Blattkategorien sind, anzeigen zu lassen, ohne dass sich die gezeichneten Elemente überlagern.
+
+Die essenzielle Interaktion mit der Visualisierung ist die Expansion ausgewählter Kategorien.
+Die Expansion einer Kategorie wird durch einen Doppelklick auf die Kategorie ausgeführt.
+Dabei werden die Unterkategorien der Ausgangskategorie dem Kategorienbaum hinzugefügt und als Knoten in die Visualisierung gezeichnet.
+Die neuen Unterkategorien werden durch Kanten mit der Ausgangskategorie verbunden.
+Dies wird in Abbildung \ref{fig:expand-cat} verdeutlicht.
+Die Expansion ermöglicht dabei dem Nutzer, einen bestimmten Pfad von Unterkategorien schrittweise zu erkunden.
+Die Erkundung der Unterkategorien eines Themengebiets wird dadurch differenzierter. 
+Neben der Expansion des Kategorienbaums für alle Blattkategorien, durch das Eingabefeld für die Tiefe, wird zudem eine feinere Interaktion zur Verfügung gestellt.
+Die Erweiterung einer Kategorie ist als eine inhaltliche Vertiefung zu verstehen.
+Das hinzufügen von Unterkategorien zu dem Kategorienbaum stellt eine Spezifizierung des umschriebenem Gegenstand der Ausgangskategorie dar.
+Diese Spezifizierung des umschriebenen Gegenstands, durch die Unterkategorien, wird in dieser Arbeit als inhaltliche Vertiefung festgelegt.
+Die Expansion stellt dabei immer eine Spezifizierung der Abstraktionsebene dar, da nur Unterkategorien dem Kategorienbaum hinzugefügt werden können.
 
 \begin{figure}
     \centering
@@ -199,60 +304,130 @@ Die Expansion stellt dabei immer ein Spezifizierung der Abstraktionsebene dar, d
     % \draw[-{Latex[length=3mm]}] (m-1-3) -- (m-1-3);
     \draw[-{Latex[length=3mm]}] (m-2-1) -- (m-2-3);
     \end{tikzpicture}
-    \caption{Die Bildabfolge stellt mehrere Expansionen vo Unterkategorien der Kategorie \emph{History of Computer science} dar. Die expandierten Kategorien sind in rot gefärbt}
+    \caption{Die Bildabfolge stellt mehrere Expansionen von Unterkategorien der Kategorie \emph{History of Computer science} dar. Die expandierten Kategorien sind rot gefärbt.}
+    \label{fig:expand-cat}
 \end{figure}
 
-Mit einem einfachen Klick auf eine Kategorie, wird die Kategorie rot gefärbt um diese von andern Kategorien unterscheiden zu können.
-Diese Auswahl einer Kategorie ergibt in Kombination mit der Änderung des Schwellwertes eine neue Interaktion.
-Durch die Fokussierung der Kategorie werden nur Kategorien gelb gefärbt wenn sie zwei Bedingungen erfüllen.
-Die Kategorien müssen Artikel eingetragen haben die eine Ähnlichkeit zur fokussierten Kategorie aufweisen und diese Ähnlichkeit muss über dem Schwellwert liegen.
-In Abbildung \ref{fig:simM-threshold-focus-cat} wird noch einmal dargestellt auf welche Art diese Interaktion sich in der Ähnlichkeitsmatrix abbildet.
-Die Kategorie fokussierte Variante der Schwellwertänderung, soll die Möglichkeit geben die Menge an Betrachteten Kategorien und zugehörigen Artikel weiter einschränken zu können, um eine Analyse zu vereinfachen.
+Mit einem einfachen Klick auf eine Kategorie, wird die Kategorie rot gefärbt, damit diese von anderen Kategorien unterschieden werden kann.
+Diese Auswahl einer Kategorie ergibt, in Kombination mit der Änderung des Schwellwerts, eine neue Interaktion.
+Durch die Fokussierung der Kategorie werden Kategorien nur dann gelb gefärbt, wenn sie zwei Bedingungen erfüllen:
+1. Unter den Kategorien müssen Artikel eingetragen sein, die eine Ähnlichkeit zur fokussierten Kategorie aufweisen. Diese Ähnlichkeit muss darüber hinaus über dem Schwellwert liegen.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/threshold-7033-lvl3-focus}
-    \caption{Die rot gefärbte Kategorie \emph{Computer architecture} wurde fokusiert. In den gelb gefärbten Kategorien sind Artikel mit einer Ähnlichkeit zur rot gefärbten Kategorie eingetragen. Der Ähnlichkeitswert eines Artikepaares hat mindestens den Wert des Schwellwertes von $0.7033$}
+    \caption{Die rot gefärbte Kategorie \emph{Computer architecture} wurde fokussiert. In den gelb gefärbten Kategorien sind Artikel mit einer Ähnlichkeit zur rot gefärbten Kategorie eingetragen. Der Ähnlichkeitswert eines Artikelpaares zwischen zwei Kategorien liegt mindestens bei $0.7033$}
     \label{fig:threshold-focus-cat}
 \end{figure}
+
+
+\section{Filterung der "Ahnlichkeitsmatrix} \label{subchap: filter-vis}
+
+% In diesem Abschnitt soll die Grafik über die simMatrix als abstraktes, nicht sichtbares Datenmodell dargestellt werden!!!
+Dieses Kapitel beschäftigt sich mit, dass, durch die Interaktion mit der Darstellung, auch der Inhalt der Ähnlichkeitsmatrix aus Kaptiel \ref{subchap:simmatrix} verändert wird.
+In der Einleitung dieses Kapitels wird erwähnt, dass der Kategorienbaum als Hierarchie von Abstaktionsebenen interpretiert wird und die Exploration von Kategorien nach einer \emph{Top-Down}-Herangehensweise realisiert wird.
+Für die Dauer einer Darstellung des Kategorienbaums werden auch die Informationen über Ähnlichkeiten von Artikeln verfügbar gemacht.
+Artikel, die in einer der dargestellten Kategorien eingetragen sind, werden mit Ähnlichkeiten zu anderen Artikeln in den Hauptspeicher geladen und als Matrix gespeichert.
+Auf diese Weise entsteht eine neue, kleinere Ähnlichkeitsmatrix.
+Die Ähnlichkeitsmatrix wird dabei auf Basis der ausgewählten Menge an Kategorien vertikal gefiltert.
+Dies bedeutet, dass Zeilen aus der ursprünglichen Matrix verworfen werden.
+Dies veranschaulicht Abbildung \ref{fig:simM-threshold-cat}.
+Das verwendete Verfahren wird \emph{kategorienbasierte} Filterung oder \emph{vertikal} Filterung genannt.
+Expandiert ein Nutzer eine Kategorie, um ihre Unterkategorien zu untersuchen, wird die Ähnlichkeitsmatrix um die Artikel aus den Unterkategorien vertikal erweitert.
+Artikel und ihre Ähnlichkeitswerte sind somit, wie Kategorien, dynamisch verfügbar.
+
+Die Menge an Artikel die durch bestimmte Kategorien, dargestellt in der Visualisierung als Kategorienbaum, ausgewählt werden, werden Kategorienraum genannt. 
+Der Kategorienraum stellt auf Artikelebene die Thematische Ausbreitung des Kategorienbaums dar.
+Durch die Einführung  des Kategorienraums ergibt sich eine neue interessante Sichtweise auf die Artikelähnlichkeiten.
+
+ 
+In der Ähnlichkeitsmatrix, welche durch eine Auswahl an Kategorien durch den Kategorienbaum entsteht, werden Artikel mit allen Ähnlichkeiten zu anderen Artikel 
+Die Artikel die innerhalb des Kategorienraums Ähnlichkeiten besitzen werden \emph{lokale} Vergleiche genannt.
+Die Artikelpaare die einen Artikel enthalten, welcher nicht im Kategorienraum  
+In der Abbildung soll verdeutlicht werden wie sich \emph{lokale} und \emph{globale} Vergleiche in der Ähnlichkeitsmatrix unterscheiden
+Durch den neuen Ansatz können Ähnlichkeiten zwischen Artikel innerhalb oder außerhalb des Kategorienraums liegen.
+Dies geben die zwei Werte der Zeile \emph{comparisons} aus dem Element (c) der Abbildung \ref{fig:small-start} wieder.
 
 \begin{figure}
     \begin{tikzpicture}
     \end{tikzpicture}
-    \caption{Darstellung der filterung der Ähnlichkeitsmatrix die durch den Schwellwert entstehen, in Kombination mit einer fokussierten Kategorie}
+    \includegraphics{images/todobild}
+    \caption{Darstellung einer Filterung der Ähnlichkeitsmatrix, die durch den Schwellwert entsteht}
+    \label{fig:simM-threshold-cat}
+\end{figure}
+
+Eine weitere Methode, um die Größe der Ähnlichkeitsmatrix zu reduzieren, ist die \emph{horizontale} Filterung.
+Diese Strategie der Reduzierung der Ähnlichkeitsmatrix ist über die Verschiebung des Reglers des Schwellwertes möglich.
+Werden die betrachteten Ähnlichkeitswerte durch einen festgelegten Schwellwert begrenzt, verkürzen sich die Zeilen der Ähnlichkeitsmatrix.
+Dieser wird in Abbildung \ref{fig:simM-threshold-cat} grafisch dargestellt.\\
+
+Eine Kombination aus einer vertikalen und einer horizontalen Filterung entsteht, wenn eine Kategorie über einen festgelegten Schwellwert, wie im vorangegangenem Abschnitt beschrieben, fokussiert wird.
+In Abbildung \ref{fig:simM-threshold-focus-cat} wird dargestellt, auf welche Weise sich diese Interaktion in der Ähnlichkeitsmatrix abbildet.
+Durch die Fokussierung einer Kategorie die Artikel mit Ähnlichkeiten über einem festgelegtem Schwellwert enthält, wird die Ähnlichkeitsmatrix weiter gefiltert.
+Auf diese Weise werden nur Artikelpaare betrachtet von denen die mindestens einer der beiden Artikel in der fokussierten Kategorie eingetragen sein muss.
+Die Ähnlichkeitsmatrix besteht an dieser Stelle nur noch aus Artikeln, die in der fokussierten Kategorie eingetragen sind und ihren \emph{lokalen} Vergleichen zu anderen Artikel aus dem Kategorienraum.
+Zusätzlich erfolgt einer Filterung der Ähnlichkeiten die unter dem Schwellwert liegen.
+Diese Herangehensweise soll eine weiter Möglichkeit zur Filterung bereitstellen und eine Analyse der Daten vereinfachen.
+
+\begin{figure}
+    \begin{tikzpicture}
+    \end{tikzpicture}
+    \includegraphics{images/todobild}
+    \caption{Darstellung der Filterung der Ähnlichkeitsmatrix, die durch den Schwellwert entsteht, in Kombination mit einer fokussierten Kategorie}
     \label{fig:simM-threshold-focus-cat}
 \end{figure}
 
 
-% Wird eine Zahl eingegeben die kleiner ist als die letztee Eingebe tiefe??
-
-Ein Nutzer gibt in der Suchleiste den Namen einer Kategorie ein, dabei wird im Hintergrund die Datenbank mit allen Wikipediakategorien nach der Existenz der gesuchten Kategorie überprüft.
-Entspricht der gesuchte Begriff nicht eine Wikipediakategorie wird der Nuzer aufgefordert einen neuen Suchbegriff einzugeben.
-Die Schaltfläche "`GO"' recht von der Suchleiste Angeordnet wird rot gefärbt um darauf aufmerksam zu machen, dass die Suche erfolglos war. 
-Abbildung~\ref{fig:wrong-cat} zeigt die Suchleiste mit rotgefärbter Schaltfläche.
-
-
-\subsection{Benutzeroberfläche}
-Abbildung \ref{fig:small-start} stellt die Benutzeroberfläche der Visualiserung dar.
-Es wird der Kategorienbaum für die Stammkategorie \emph{Computer Science} und dessen direkte Unterkategorien abgebildet.
-Die Benutzeroberfläche besteht dabei aus vier Elementen, dem Hauptfenster in dem der Kategorienbaum gezeichnet wird (a), einer zusammenfassenden Statistik über die Daten (b), einer Suchleiste (c) und einem Regler für den Schwellwert (d). 
 
 
 
-\section{Laufzeit}
-\section{Filterung der "Ahnlichkeitsmatrix}
+
+
+
+% Wird eine Zahl eingegeben, die kleiner ist als die letzte angegebene Tiefe?
+% Ein Nutzer gibt in der Suchleiste den Namen einer Kategorie ein, dabei wird im Hintergrund die Datenbank mit allen Wikipedia-Kategorien nach der Existenz der gesuchten Kategorie überprüft.
+% Entspricht der gesuchte Begriff nicht einer Wikipedia-Kategorie wird der Nutzer aufgefordert, einen neuen Suchbegriff einzugeben.
+% Die Schaltfläche "`GO"', rechts von der Suchleiste angeordnet, wird rot gefärbt, um darauf aufmerksam zu machen, dass die Suche erfolglos war. 
+% Abbildung~\ref{fig:wrong-cat} zeigt die Suchleiste mit rot gefärbter Schaltfläche.
+
+% =============================
+
+% Notizen ingnorieren =================
+% Ebene --> ringe!!
+% Warum ein radiales Layout? warum konzentrisch, Welche Eigenschafte  sind gefragt und welche werden erfüllt.
+% Ausnutzen des gesamte Raums?
+% Konkrete Struktur des Kategorienbaums ist nicht klar.
+
+% Wie funktioniert der Algorithmus von Eades?
+% fokus aug Knoten statt Kanten.
+% Strategie der beschriftung der Knoten.
+%  ====================================
+
+
+
+%Der Schieberegler ändert an erster Stelle nicht den sichtbaren Schwellwert, sondern gibt eine Grenze für die Artikelähnlichkeit den Datensatz an.
+
+
+
+
+% An verschiedenen Stellen in diesem Kapitel wurde darauf verwiesen, dass die Darstellung des Kategorienbaums Auswirkungen auf den Inhalt der  Ähnlichkeitsmatrix, welche in  Kapitel \ref{subchap:simmatrix} beschrieben wurde, hat.
+% Dieser Abschnitt beleuchtet die Vorgänge mit der die Ähnlichkeitsmatix gefiltern werden kann.
+% Ziel neben der Darstellung  des Kategorienbaums, ist die Filterung der Ähnlichkeitesmatrix.
+% Wie in der Einleitung 
+
+
+
+
 % \begin{itemize}
 %     \item Erl"auterung der Auswahl von Artikel aus der "Ahnlichkeitsmatrix
 % \end{itemize}
 
 
 
-
-
-%% Kapitel Visualisierung realisiesrung
-Der Datensatz über die Ähnlichkeiten zwischen den Artikeln soll im Hintergrund auf diejenigen Artikel reduziert werden, welche den explorierten Kategorien entsprechen.
-Auf diese Art soll die Matrix mit mehreren Billionen Vergleichen nicht nur auf eine überschaubare Menge reduziert werden, die klein genug ist, um sie schnell zu verarbeiten, sondern auch auf ein Themengebiet eingeschränkt werden.
-Der Grundgedanke ist dabei, dass die Nachvollziehbarkeit von Ähnlichkeitswerten erleichtert wird, da sich die Artikel bereits thematisch ähneln und zudem eventuell ein ähnliches Vokabular benutzen.
-Die Vermutung liegt nahe, dass in einem abgeschlossenen Themengebiet die Vergleichswerte zwischen den Artikeln sehr hoch sein werden.
+% %% Kapitel Visualisierung realisiesrung
+% Der Datensatz über die Ähnlichkeiten zwischen den Artikeln soll im Hintergrund auf diejenigen Artikel reduziert werden, welche den explorierten Kategorien entsprechen.
+% Auf diese Art soll die Matrix mit mehreren Billionen Vergleichen nicht nur auf eine überschaubare Menge reduziert werden, die klein genug ist, um sie schnell zu verarbeiten, sondern auch auf ein Themengebiet eingeschränkt werden.
+% Der Grundgedanke ist dabei, dass die Nachvollziehbarkeit von Ähnlichkeitswerten erleichtert wird, da sich die Artikel bereits thematisch ähneln und zudem eventuell ein ähnliches Vokabular benutzen.
+% Die Vermutung liegt nahe, dass in einem abgeschlossenen Themengebiet die Vergleichswerte zwischen den Artikeln sehr hoch sein werden.
 
 

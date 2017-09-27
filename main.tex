@@ -12,6 +12,10 @@
 
 \hypersetup{hidelinks}
 
+% Bagrat Test
+%\usepackage[sort&compress]{natbib}
+
+
 \begin{document}
 \pagenumbering{Roman} % große Römische Seitennummerierung
 \pagestyle{empty}
@@ -31,8 +35,7 @@ Studiengang Medieninformatik
 \begin{center}
 \vspace{20mm}
 \begin{LARGE}
-Visualization of Large Text Corpora
-%Temporal Interpolation and Spatio-Temporal Compression of Large Time-Varying Volume Data-Sets\\
+Visualisierung der Kategorienstruktur der Wikipedia und Filterung der Ähnlichkeiten von Artikeln auf Basis von Kategorien.\\
 \end{LARGE}
 \vspace{20mm}
 \begin{LARGE}
@@ -100,9 +103,15 @@ In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn b
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{./cover}
-\caption{Die Kategorie \textit{Computer science} bildet als Stammverzeichnis das Zentrum. Alle Kategorien einer Entfernung von drei zur Stammkategorie sind auf konzentrischen Ringen angeordnet.}
-\label{fig:cover}
+% \caption{Die Kategorie \textit{Computer science} bildet als Stammverzeichnis das Zentrum. Alle Kategorien einer Entfernung von drei zur Stammkategorie sind auf konzentrischen Ringen angeordnet.}
+% \label{fig:cover}
 \end{figure}
+
+% \textit{"However, as we can witness from the example of the Porphyrian tree, the tree of Jesse, the consanguinity tree, Llull's tree of science, and Darwin's tree of life, when sustained by a unique thesis or proposition, a visualization can become an immensely powerful tool and an enduring, contagious meme."}
+% \begin{flushleft}
+% (Lima 2014, S .43)
+% \end{flushleft}
+
 % ===============================================================
 
 \tableofcontents
@@ -115,7 +124,6 @@ In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn b
 \cleardoublepage
 \pagenumbering{arabic} % ab jetzt die normale arabische Nummerierung
 
-
 \chapter{Einleitung}
 \label{chap:einleitung}
 \input{sections/01_introduction.tex}
@@ -127,10 +135,6 @@ In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn b
 \chapter{Daten}
 \label{chap:daten}
 \input{sections/03_daten.tex}
-
-\chapter{Datenverarbeitung}
-\label{chap:daten_ver}
-\input{sections/03_daten2.tex}
 
 \chapter{Visualisierung}
 \label{chap:visualization}
@@ -184,6 +188,11 @@ wikidb project visaul text analytics
 %\bibliographystyle{bibliographie/a_m.bst}
 
 \printbibliography
+
+% Bagrat Test
+%\bibliographystyle{apalike} % requires package natbib. An alternative is plainnat, apalike
+%\bibliography{bibliographie/bibliographie.bib}    % load file literature.bib
+
 
 % \bibliographystyle{unsrt}
 % {\footnotesize

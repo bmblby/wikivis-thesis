@@ -1,18 +1,21 @@
 % !TEX root = ../main.tex
 % Daten
 
-Dieses Kapitel erörtert die Struktur der Datensätze sowie die Methoden mit denen die Datensätze erstellt wurden.
-Dabei wird im Detail auf zwei Datensätze eingegangen: der Wikipediadatensatz im XML-Format und eine spärlich besetzte Adjazenz-Matrix.
+Dieses Kapitel erörtert die Struktur der Datensätze sowie die Methoden, mit denen die Datensätze erstellt werden.
+Dabei wird im Detail auf zwei Datensätze eingegangen: den Wikipedia-Datensatz im XML-Format und eine dünn besetzte Matrix von Artikelähnlichkeiten.
+In der Forschungsarbeit \emph{Visual Text Analytics} wurde eine erste Visualisierung der Matrix mit Ähnlichkeiten von Wikipedia-Artikeln gewagt.
+Auf dieser Grundlage wird sich in dieser Arbeit erneut mit den genannten Datensätzen auseinandergesetzt, um eine neue Darstellungsform zu finden.
 Der Abschnitt \ref{subchap:wikidump} erläutert, in welchem Format der Datensatz von Wikipedia vorliegt und welche Informationen aus diesem für die Visualisierung extrahiert werden können.
-Im Abschnitt \ref{subchap:simmatrix} wird zum einen beschrieben, wie die dünn besetzte Matrix erstellt und zum anderen in welcher Struktur sie gespeichert wird.
-Der nachfolgende Teil des Kapitels beschäftigt sich mit dem schematischen Aufbau der Datenbank.
-Die Tabelle \ref{tab:dataset-size} zeigt die Größe der beiden Datensätze im Vergleich.
+Im Abschnitt \ref{subchap:simmatrix} wird zum einen beschrieben, wie die dünn besetzte Matrix mit Artikelähnlichkeiten erstellt und zum anderen in welcher Struktur sie gespeichert wird.
+Der letzte Abschnitt des Kapitels beschäftigt sich mit dem schematischen Aufbau der Datenbank.
+Die Tabelle \ref{tab:dataset-size} gibt einen Überblick über die Größenverhältnisse der beiden Datensätze im Vergleich.
 
-% und den notwendigen Schritten der S"auberung der Datens"atze zur erstelltung der Datenbank.
+
+%Nachfolgend wird in Tabelle \ref{tab:dataset-size} ein Überblick der Größenverhältnisse der beiden Datensätze dargestellt, dies dient zu Orientierung.
 
 % Tabelle datensatz groesse
 %NOTE: vllt groesse martin erste simMatrix
-\begin{table}
+\begin{table}[h]
 \centering
 % \begin{center}
 \begin{tabular}{l r}
@@ -20,8 +23,8 @@ Die Tabelle \ref{tab:dataset-size} zeigt die Größe der beiden Datensätze im V
   Datensatz & Größe \\
   \hline
   Wikipedia-Dump & 54 GB \\
-  "Ahnlichkeitsmatrix & 642 GB \\
-  \hline
+  Ähnlichkeitsmatrix \cite{licht:2017} & 642 GB \\
+  Ähnlichkeitsmatrix \cite{riehmann2016visualizing} & 402 GB\\
 \end{tabular}
 % \end{center}
 \caption{Größe der Datensätze in Gigabyte (GB)}
@@ -31,23 +34,13 @@ Die Tabelle \ref{tab:dataset-size} zeigt die Größe der beiden Datensätze im V
 
 
  % =================================================
-\section{Wikipedia XML Dump}
-\label{subchap:wikidump}
-
-% Datenstruktur wikipedia Korpus
-%   groesse
-%   namespaces
-%   welche meta informationen werden extrahiert
-%       titel, laenge, revid, wikiid, categories, 
-% struktur Kategoriebaum
- 
-Der Wikipediadatensatz ist im XML-Format gespeichert und beinhaltet sämtliche Seiten der Wikipedia. 
-Darunter fallen sowohl die jeweiligen Seiten auf der Portal-, Kategorien- und Artikelebene, als auch zusätzliche Seiten, wie das Impressum oder die Erklärungsseite über das Projekt der Wikipedia.
-Dabei werden die unterschiedlichen Seiten in "`Wikipedia Namespaces"' eingeteilt [wns] \footnote{\url{https://en.wikipedia.org/wiki/Wikipedia:Namespace}}.
-Die Tabelle \ref{tab:dataset-size} gibt Auskunft über die Größe eines solchen Wikipedia-Datensatzes.
-Die vorliegende Arbeit beschränkt sich hierbei auf die für diese Analyse relevanten Artikelseiten aus dem [wns 0] sowie die Kategorienseiten aus dem [wns 14].
+\section{Wikipedia XML Dump} \label{subchap:wikidump}
+Der Wikipedia-Datensatz ist im XML-Format gespeichert und beinhaltet sämtliche Seiten der Wikipedia. 
+Darunter fallen sowohl die jeweiligen Seiten auf der Portal-, Kategorien- und Artikelebene, als auch zusätzliche Seiten, wie das Impressum oder die Erklärungsseite über das Wikipediaprojekt.
+Dabei werden die unterschiedlichen Seiten in "`Wikipedia Namensräume"' eingeteilt [wns] \footnote{\url{https://en.wikipedia.org/wiki/Wikipedia:Namespace}}.
+Die vorliegende Arbeit beschränkt sich auf die für diese Analyse relevanten Artikelseiten aus dem [wns 0] sowie die Kategorienseiten aus dem [wns 14].
 Aus diesen Seiten lassen sich alle Metainformationen extrahieren, die für eine visuelle Darstellung notwendig sind.
-Der Tabelle \ref{tab:xml-overview} ist die genaue Anzahl der Artikelseiten und der Kategorienseiten zu entnehmen, welche im Wikipedia-Datensatz enhalten sind.
+Der Tabelle \ref{tab:xml-overview} ist die genaue Anzahl der Artikelseiten und der Kategorienseiten zu entnehmen, welche im Wikipedia-Datensatz enthalten sind.
 
 \begin{table}
 \centering
@@ -57,152 +50,74 @@ Der Tabelle \ref{tab:xml-overview} ist die genaue Anzahl der Artikelseiten und d
   \hline
   sämtliche Wikipedia-Seiten & 16.527.332 \\
   Artikelseiten & 12.488.908 \\
-  Kategorieseiten & 1.398.260 \\
+  Kategorienseiten & 1.398.260 \\
   \hline
 \end{tabular}
-\caption{Verteilung der Artikel- und Kategorienseiten im Wikipedia-Datensatz, mit doppelten Seiten, Weiterleitungen und Vereindeutigungsseiten}
+\caption{Verteilung der Artikel- und Kategorienseiten im Wikipedia-Datensatz, mit doppelten Seiten, Weiterleitungen und Begriffsklärungsseiten}
 \label{tab:xml-overview}
 \end{table}
 
-
-Die im Anhang einsehbaren Auszüge \ref{xml-artikel} und \ref{xml-kategorie} stellen einen Ausschnitt aus dem Wikipedia-Dump für eine Artikel- und eine Kategorienseite dar.
-Metainformationen wie der 'Titel', die 'Revisions-Id', die 'Wikipedia-Id' und der 'Namespace' können durch die definierten \emph{Elemente} des nach dem XML-Schema formatierten Wikipedia-Datensatzes mit geringem Aufwand extrahiert werden.
-Diese Stellen sind in den Auszügen rot markiert, die blau markierten Stellen dagegen befinden sich innerhalb des \emph{Textelements}, also innerhalb des Fließtextes einer Wikipedia-Seite.
-Um die Metainformationen über die Kategorienzugehörigkeit aus dem Fließtext extrahieren zu können, müssen reguläre Ausdrücke zur Extraktion geschrieben werden.
-
-% Mit der Hilfe von regul"aren Ausdr"ucken k"onnen auch Metainformatione aus dem Flie"stext extrahiert werden, in diesem Fall die Kategorizugeh"origkeit.
-% F"ur die Extraktion aller Metainformation aus dem Wikipediadatensatz wurde ein Programm geschrieben um die Daten in Datein zwischenspeichert um Sie dann mit dern Daten aus der "Ahnlihckeitsmatrix zusammen zuf"uhren.
-
+Metainformationen wie der Titel, die Revisionsnummer (\emph{RevisionID}), der Wikipediaindex (\emph{WikipediaID}) und der zugehörige Namensraum (\emph{Namespace}) können durch die definierten Elemente (\emph{Tags}) des nach dem XML-Schema formatierten Wikipedia-Datensatzes mit geringem Aufwand extrahiert werden.
+Diese Stellen sind in den Auszügen rot markiert, die blau markierten Stellen dagegen verweisen auf Inhalte im Fließtext der Wikipedia-Seiten, das \emph{Textelement}.
+Um die Metainformationen über die Kategorienzugehörigkeit aus dem Fließtext extrahieren zu können, müssen reguläre Ausdrücke \footnote{\url{https://en.wikipedia.org/wiki/Regular\_expression\#Basic\_concepts}} zur Extraktion definiert werden.
 Der Abschnitt \ref{subchap:date-pipeline} geht im Speziellen darauf ein, wie die Daten verarbeitet werden, damit die extrahierten Daten gemeinsam mit der Ähnlichkeitsmatrix in die Datenbank eingepflegt werden können.
 
-\subsubsection{Filterung}
-Die in Tabelle \ref{tab:dataset-size} dargestellten Zahlen beinhalten viele Seiten, die keiner Informationsgewinnung dienen.
-Dazu gehören bespielsweise Seiten, welche als Weiterleitung auf andere Seiten fungieren. Diese Seiten gibt es sowohl auf der Artikelebene als auch auf der Kategorienebene.
-Die zweite Art von Seite, welche inhaltslos sein kann, sind Artikelseiten, die zur Vereindeutigung dienen, wenn es mehrere Artikel zu einem Begriff mit verschiedenen Bedeutung gibt.
-Im Anhang befinden sich Auszüge solcher Seiten.
-
-
+Der in Tabelle \ref{tab:dataset-size} dargestellt Wikipedia-Datensatz beinhaltet viele Seiten, die keiner Informationsgewinnung im Sinne dieser Arbeit dient.
+Dazu gehören beispielsweise Seiten, welche als Weiterleitung auf andere Seiten fungieren.
+Diese Seiten gibt es sowohl auf der Artikelebene als auch auf der Kategorienebene.
+Die zweite Art von Seiten, die inhaltslos sein können, sind Begriffsklärungsseiten.
+Diese Seiten dienen der Auflösung von Wikipedia-Seiten mit identischem oder sehr ähnlichem Namen und unterschiedlichen Bedeutungen.
+Die im Anhang einsehbaren Auszüge \ref{xml-artikel} und \ref{xml-kategorie} stellen einen Ausschnitt aus dem Wikipedia-Datensatz für eine Artikel- und eine Kategorienseite dar.
  % =================================================
+
+
  
 
  % =================================================
-\section{"Ahnlichkeitsmatrix}
-\label{subchap:simmatrix}
-% beide Arbeiten verwenden die Kosinusähnlichkeit als Ma"s für die Vergleiche
-% Bezugname Arbeit von Potthast
-%   Verwendetes "Ahnlichkeitesma"s 
-%   Daten "uber die "Ahnlichkeiten (Anzahl)
+\section{Ähnlichkeitsmatrix} \label{subchap:simmatrix}
+In diesem Kapitel werden die unterschiedlichen Ansätze zur Konstruktion der Ähnlichkeitsmatrix und der Berechnung von Ähnlichkeiten in der Wikipedia erläutert.
+Dabei soll darauf eingegangen werden, welche Berechnungen notwendig sind, um die Ähnlichkeitsmatrizen zu konstruieren.
+Im Folgendem werden Verfahren erklärt die zur Erstellung der Ähnlichkeitsmatrix genutzt wurden.
 
-% Bezugnahme zur Thesis von Tristan Licht
-%   Verwendetes "Ahnlichkeitesma"s
-%   "Ahnlichkeit von Paragraphen
-%   Daten "uber die "Ahnlichkeiten (Anzahl)
-
-% Inhalt der Matrix
-% schematischer aufbau grafik
-% Vergleich der zwei Datens"atze
- 
-% kurzer Absatz wie im Papert vta, was wurde wie berechnet
-% kleine Tabelle??
+\todo{TFIDF- Kosinus- Wortverkotren-}
 
 In der Arbeit \emph{"`Visualizing Article Similarities in Wikipedia"'} \cite{riehmann2016visualizing} werden die Artikel der Wikipedia untereinander verglichen.
-Dafür werden in einem ersten Schritt mit Hilfe der Stoppwort-Entfernung und dem Stemming für die jeweiligen Artikel Wortvektoren erstellt, welche nach dem TF-IDF-Modell gewichtet sind.
-Gemeinsam bilden diese Vektoren eine Termdokumentenmatrix, mit welcher sich dann die Kosinusäahnlichkeiten berechnen lassen.
-In einem nächsten Schritt werden die Wortvektoren in absteigender Rangordnung untereinander verglichen, wobei nur die Vergleiche gespeichert werden, die einen Ählichkeitswert über $0.1$ haben oder zu den $100.000$ höchsten Vergleichen mit einem Wert über $0.1$ gehören.
-Damit die mögliche Anzahl an Berechnungen pro Artikel eingegrenzt werden kann und weiter sinkt, werden die Artikel mit einer Länge über 50 Wörtern mit allen Artikeln verglichen.
+Dafür werden in einem vorangegangenen Schritt (\emph{Preprocessing}) die Stoppwörter aus den Texten entfernt und die Extraktion des Wortstamms (\emph{Stemming}) durchgeführt. Auf dieser Grundlage werden anschließend die Wortvektoren der jeweiligen Artikel erstellt, die nach dem Tf-idf-Ma{\ss} gewichtet sind.
+Gemeinsam bilden diese Vektoren eine Termdokumentenmatrix, mit welcher sich dann die Kosinusähnlichkeiten berechnen lassen.
+In einem nächsten Schritt werden die Wortvektoren in absteigender Rangordnung untereinander verglichen, wobei nur die Vergleiche gespeichert werden, die einen Ähnlichkeitswert über $0.1$ haben oder zu den $100.000$ Vergleichen mit den höchsten Ähnlichkeitswerten über $0.1$ gehören.
+Damit die mögliche Anzahl an Berechnungen pro Artikel eingegrenzt werden kann und weiter sinkt, werden nur Artikel mit einer Länge von über 50~Wörtern mit allen Artikeln verglichen.
 Dies bedeutet, dass längere Artikel mit kürzeren Artikeln verglichen werden, jedoch nicht kürzere untereinander.
-Die enstandene Ähnlichkeitsmatrix beinhaltet im Vergleich 3.8 Millionen Artikel und hat eine Größe von 402 GB.
+Die entstandene Ähnlichkeitsmatrix beinhaltet 3.8~Millionen Artikel und hat eine Größe von 402~GB.
 In der Grafik \ref{fig:simmatrix-1} wird der Aufbau schematisch dargestellt.
-Das Ergebnis dieses Ansatzes ist jedoch, dass die einfache Kosinusähnlichkeit auf Artikelebene in ihrer Funktion als Vergleichsmaß als unzureichend einzustufen ist.
+Der Ansatz, die Kosinusähnlichkeit als Indikator für die Textwiederverwendung von Artikeln zu einzusetzen, ist nicht ausreichend. 
+
+% Das Ergebnis dieses Ansatzes ist jedoch, dass die einfache Kosinusähnlichkeit auf Artikelebene in ihrer Funktion als Vergleichsmaß als unzureichend einzustufen ist.
 
 \begin{figure}
-\begin{tikzpicture}[scale=1]
-% first column
-\draw[black, thick, ->] (2,5.5) -- (5,5.5) node[near start, above]{a};
-\draw[black, thick, ->] (0,5) -- (0,3) node[left]{b};
-% \draw (0,0) node {a: absteigende "Ahnlichkeitsewrte};
-% \draw (6,0) node {b: absteigende Artikell"ange};
-\foreach \y in {1,1.5,...,5}
-{
-    \draw (1,\y) +(-.75,-.25) rectangle ++(.75,.25);
-    \draw (1,\y) node{revid};
-}
-
-
-\foreach \x in {2.5,4.0}
-{
-    \foreach \y in {1,1.5,...,5}
-    \filldraw[fill=green!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
-    % \draw (\x,1) node{revid};
-}
-\foreach \x in {5.5,7.0}
-{
-    \foreach \y in {1,1.5,...,5}
-    \filldraw[fill=red!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
-    % \draw (\x,1) node{revid};
-}
-\foreach \x in {8.5,10.0}
-{
-    \foreach \y in {1,1.5,...,5}
-    \filldraw[fill=green!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
-    % \draw (\x,1) node{revid};
-}
-\foreach \x in {11.5,13.0}
-{
-    \foreach \y in {1,1.5,...,5}
-    \filldraw[fill=red!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
-    % \draw (\x,1) node{revid};
-}
-\foreach \x in {14.5,16.0}
-{
-    \foreach \y in {1,1.5,...,5}
-    \filldraw[fill=green!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
-    % \draw (\x,1) node{revid};
-}
+    \begin{tikzpicture}[scale=1]
     
-\foreach \y in {1,1.5,...,5} {
-    \foreach \x in {2.5,5.5,...,16}
-    {
-        \draw (\x,\y) node{revid};
-    }
-    \foreach \x in {4.0,7.0,...,16}
-    {
-        \draw (\x,\y) node{simval};
-    }
-}
-    
-    % % revision
-    % \foreach \x in {2.7,5.7,...,15}
-    % {
-    %     \filldraw[fill=green!30, thick] (\x,1.5) +(-.75,-.25) rectangle ++(.75,.25);
-    %     \draw (\x,1.5) node{revid};
-    % }
-    % %simval
-    % \foreach \x in {4.2,7.2,...,15}
-    % {
-    %     \filldraw[fill=red!30, thick] (\x,1.5) +(-.75,-.25) rectangle ++(.75,.25);
-    %     \draw (\x,1.5) node{simval};
-    % }
-% }
-\end{tikzpicture}
-\caption{Schema der Ähnlichkeitsmatrix nach \cite{riehmann2016visualizing} \emph{a}: sortiert nach den absteigenden Ähnlichkeitswerten \emph{b}: sortiert nach der absteigenden Artikellänge}
-\label{fig:simmatrix-1}
+    \end{tikzpicture}
+    \caption{Schema der Ähnlichkeitsmatrix nach \cite{riehmann2016visualizing} \emph{a}: sortiert nach absteigenden Ähnlichkeitswerten \emph{b}: sortiert nach absteigenden Artikellänge}
+    \label{fig:simmatrix-1}
 \end{figure}
 
 
 % LICHT
 % erwaehnen der selben daten und schritte wie in vta nur fuer licht thesis
-Die Arbeit \emph{"`Eruierung von Methoden zur Exploration von Textwiederverwendung in großen Datenmengen am Beispiel der Wikipedia"'} \cite{licht:2017} baut auf den Ergebnissen von \cite{riehmann2016visualizing} auf, versucht im Gegensatz aber nicht auf Dokumentenebene, sondern auf Paragraphenebene die Vergleiche zu berechnen.
-Dafür werden die Artikel anhand ihrer Überschriften in Paragraphen unterteilt.
-Diese veränderte Schwerpunktsetzung hinsichtlich der Paragraphen soll die Suche nach Passagen durch die Textwiederverwendung verbessern.
-Da die Vergleiche bei dieser Methode auf Paragraphenebene gezogen werden, vergrößert sich die Anzahl an möglichen Vergleichen signifikant, was wiederum eine neue Herausfordeung darstellt.
+Die Arbeit \emph{"`Eruierung von Methoden zur Exploration von Textwiederverwendung in großen Datenmengen am Beispiel der Wikipedia"'} von Licht \cite{licht:2017} baut auf den Ergebnissen von Riehmann et al. \cite{riehmann2016visualizing} auf.
+In der Arbeit von Licht wird ein anderer Ansatz verfolgt. Im Unterschied zu Riehmann et al. wird die Kosinusähnlichkeit zwischen Paragrafen von Wikipedia-Artikeln berechnet.
+Dafür werden die Wikipeda-Artikel anhand von Paragrafenüberschriften in eigene Texte geteilt.
+Die kleineren Textbausteine werden im folgendem Paragrafen genannt.
+Diese veränderte Schwerpunktsetzung hinsichtlich der Paragrafen soll die Suche nach Passagen von Textwiederverwendung präzisieren.
+Durch diesen neuen Ansatz, die Ähnlichkeiten zwischen Paragrafen zu berechnen, vergrößert sich die Anzahl an möglichen Vergleichen signifikant, was wiederum eine neue Herausforderung darstellt.
 
-Die Artikel werden tokenisiert und von Stoppwörtern gesäubert.
-Paragrpahen, die kürzer als 50 Wörter sind, werden mit dem vorherigem Paragraphen zusammengeführt. 
-Artikel, welche eine Länge von 100 Wörtern unterschreiten, werden nicht für die Berechnung betrachtet.
-Des Weiteren werden Artikel, die keinen Inhalt bieten, sondern lediglich zur Vereindeutigung dienen, ausgelassen.
-Die Tabelle \ref{tab:simMatrix-overview} nach \cite{licht:2017} verdeutlicht die Reduzierung der Artikel durch die beschriebenen Schritte und die tatsächliche Anzahl an ermittelten Paragraphen, für welche die Ähnlichkeit berechnet wird.
-Aus den daraus resultierenden Paragraphen berechnen sich eine Menge von $36,19$ Billionen Vergleichsoperationen.
+Nachfolgend werden die Schritte erläutert, mit der nach Licht die Paragrafen erstellt werden.
+Die Artikel werden mit dem Verfahren der Wortzerlegung in einzelne Wortbausteine aufgebrochen (\emph{tokenization}) und anschließend von Stoppwörtern entfernt.
+Paragrafen, die kürzer als 50~Wörter sind, werden mit dem vorherigen Paragrafen zusammengeführt. 
+Artikel, welche eine Länge von 100~Wörtern unterschreiten, werden nicht für die Berechnung in Betracht gezogen.
+Des Weiteren werden Artikel, die keinen Inhalt bieten, sondern lediglich der Begriffsklärung dienen, ausgelassen.
+Die Tabelle \ref{tab:simMatrix-overview} verdeutlicht die Reduzierung der Artikel durch die beschriebenen Schritte und die tatsächliche Anzahl an ermittelten Paragrafen, für welche die Ähnlichkeit berechnet wird.
+Daraus resultiert eine Menge von $36,19$~Billionen Vergleichsoperationen, basierend auf den erstellten Paragrafen.
 
 \begin{table}
 \centering
@@ -213,12 +128,12 @@ Aus den daraus resultierenden Paragraphen berechnen sich eine Menge von $36,19$ 
   Seiten in wns 0 & 5.139.351 \\
   Seiten in wns 14 & 5.139.351 \\
   Artikel gefiltert durch Länge & 2.400.125 \\
-  Artikel gefiltert durch Vereindeutigung & 118.468 \\
+  Artikel gefiltert durch Bergiffsklärung & 118.468 \\
   Verbleibende Artikel & 2.620.758 \\
-  Resultierende Paragraphen & 8.507.799 \\
+  Resultierende Paragrafen & 8.507.799 \\
   \hline
 \end{tabular}
-\caption{Übersicht der gefilterten Wikipedia-Artikel}
+\caption{Übersicht der gefilterten Wikipedia-Artikel \cite{licht:2017}}
 \label{tab:simMatrix-overview}
 \end{table}
 
@@ -239,19 +154,21 @@ Aus den daraus resultierenden Paragraphen berechnen sich eine Menge von $36,19$ 
   $[0.1,0.2)$ & $31.624.808.958$\\
   \hline
 \end{tabular}
-\caption{Verteilung der Ähnlichkeiten über die Artikel anhand ihrer ähnlichsten Paragraphen}
+\caption{Verteilung der Ähnlichkeiten über die Artikel anhand der in den Artikeln enthaltenen Paragrafen mit der höchsten Ähnlichkeit zueinander}
 \label{tab:simMatrix-overview-sims}
 \end{table}
 
-Die Paragraphen, welche als TF-IDF gewichtet sind und als dünn besetzte Vektoren vorliegen, werden mit der Kosinusähnlichkeit untereinander verglichen.
-Aus der Paragraphenmatrix wird zurück auf die Artikelebene abgebildet, in dem nur die Paragraphenpaare gespeichert werden, welche für ein Artikelpaar über die höchste Ähnlichkeit haben.
-Anschlißend werden für die entsprechenden Paragraphen Representatnen in Form von TF-IDF gewichteten, dünn besetzten Wordvektoren erstellt.
-Damit stehen die Paragraphen mit der höchsten Ähnlichkeit zueinenader stellvertretend für die Ähnlichkeit zwischen zwei Artikeln.
+Die Paragrafen, welche nach dem Tf-idf-Ma{\ss} gewichtet sind und als dünn besetzte Vektoren vorliegen, werden mit der Kosinusähnlichkeit untereinander verglichen.
+Anschließend werden für die entsprechenden Paragrafen Repräsentanten in Form von dünn besetzten, nach dem Tf-idf-Maß gewichteten, Wordvektoren erstellt.
+Aus der Matrix mit Ähnlichkeiten zwischen Paragrafen wird zurück auf die Ähnlichkeit zwischen Artikeln abgebildet.
+Indem nur die Paragrafenpaare gespeichert werden, welche für ein Artikelpaar die höchste Ähnlichkeit haben, ist es möglich, die enorme Menge an berechneten Paragrafenähnlichkeiten auf die Anzahl von Artikelähnlichkeiten zu reduzieren.
+Damit stehen die Paragrafen mit der höchsten Ähnlichkeit zueinander stellvertretend für die Ähnlichkeit zwischen zwei Artikeln.
 In \todotext{grafik ablauf s"auberung} ist ein schematischer Ablauf der beschriebenen Schritte zu sehen, während die Abbildung \todotext{grafik new simMatrix csv} den Aufbau einer Ähnlichkeitsmatrix nach \cite{licht:2017} zeigt.
 
-Um die bestehende Pipeline zur Erstellung der Datenbank zu nutzen, sollte die Matrix nach \cite{licht:2017} dem Format der Matrix nach \cite{riehmann2016visualizing} entsprechen.
+Um die bestehende Abfolge der Datenverarbeitung zur Erstellung der Datenbank zu nutzen, sollte die Matrix nach \cite{licht:2017} dem Format der Matrix nach \cite{riehmann2016visualizing} entsprechen.
 
  % =================================================
+
 
 
  % =================================================
@@ -259,39 +176,43 @@ Um die bestehende Pipeline zur Erstellung der Datenbank zu nutzen, sollte die Ma
 \label{subchap:database}
 % erlaueterung der DAtenbankstruktur
 % page table
-% category table
-% article table
+% Category table
+% Article table
 Dieses Kapitel befasst sich mit dem Aufbau des Datenbankschemas sowie dem Gefüge aus \emph{FastDB} und \emph{WikiDB}.
 
 \paragraph{FastDB und Datenbankschema}
-Zur Speicherung der Daten wird eine In-Memory-Datenbank nach \cite{fastdb} genutzt, auf diese Art wird der Zugriff auf die Daten beschleuningt.
-Die \emph{FastDB} nach \cite{fastdb} ist eine Objekt-Relationale-Datenbank \footnote{\url{https://en.wikipedia.org/wiki/Object-relational_database}}.
+Zur Speicherung der Daten wird eine Datenbank, welche im Hauptspeicher liegt (\emph{in-memroy-database}), nach Knizhnik \cite{fastdb} genutzt. Auf diese Art wird der Zugriff auf die Daten beschleunigt.
+Die \emph{FastDB} nach \cite{fastdb} ist eine objektrelationale Datenbank \footnote{\url{https://en.wikipedia.org/wiki/Object-relational\_database}}.
 Die Datenbank wird durch sogenannte Klassen modelliert: Die jeweiligen Klassen stellen dabei die einzelnen Tabellen dar und die Instanzen der Klassen entsprechen den Zeilen einer Tabelle.
 Die Variablen einer Klasse sind die Spalten der Tabellen dieser Datenbank.
 In der Abbildung \ref{fig:uml-database} wird der Aufbau der Datenbank verdeutlicht.
-In der Klasse \emph{page} sind die Eigenschaften vereint, welche für die Seiten mit den jeweiligen Wikipedia-Namensräumen zutreffen, wie der Titel, die Revisions-Id oder eine Liste von Kategorien, in welchen die Seite eingetragen ist.
-Die Seiten Klassen \emph{article} und \emph{category} stellen Spezialisierungen der Klasse \emph{page} dar.
-Ein \emph{article} besitzt zusätzlich zu den Eigenschaften einer \emph{page} eine bestimmte Anzahl an Wörtern, genauso wie eine Liste von vergleichbaren Artikeln.
-Diese Liste der vergleichbaren Artikel macht den Großteil der Datenbank aus, dabei entsprechen die Listen mit den Vergleichspaaren den Zeilen aus der Ähnlichkeitsmatrix.
-Die Klasse der \emph{category} hingegen verfügt über keine Artikelvergleiche, dafür aber über eine Liste mit weiteren Kategorien, welchen sie angehört.
-Die Datenbank enthält zudem Informationen darüber, welche Artikel oder Kategorien ebenfalls in anderen Kategorien erwähnt werden.
-Die Verknüpfungen werden dabei bidirektional eingetragen, somit lässt sich aus einer Kategorie ablesen, welche Artikel oder Kategorien in derjenigen eingetragen sind.
+In der Klasse \emph{Page} sind die Eigenschaften vereint, welche für die Kategorienseiten und für die Artikelseiten zutreffen.
+Diese sind der Titel, die Revisionsnummer oder die Liste von Kategorien, in welchen die Seite eingetragen ist.
+Die Klassen \emph{Article} und \emph{Category} stellen Spezialisierungen der Klasse \emph{Page} dar.
+Die Klasse \emph{Article} besitzt zusätzlich zu den Eigenschaften der Klasse \emph{Page} eine bestimmte Anzahl an Wörtern, genauso wie eine Liste von verglichenen Artikeln mit der berechneten Ähnlichkeit.
+Diese Liste der verglichenen Artikel ist dabei der speicherintensivste Teil der Datenbank.
+Eine Zeile aus der Ähnlichkeitsmatrix, in der Artikelähnlichkeiten zu bestimmten Artikeln 
+Dabei entsprechen die Listen mit den Vergleichspaaren den Zeilen des zugehörigen aus der Ähnlichkeitsmatrix.
+Die Klasse der \emph{Category} hingegen verfügt über keine Artikelähnlichkeiten, dafür aber über eine Liste mit weiteren Kategorien in denen sie eingetragen ist.
+
+Die Datenbank enthält zudem Informationen darüber, welche Artikel oder Kategorien ebenfalls in anderen Kategorien eingetragen sind.
+Die Verknüpfungen werden dabei bidirektional eingetragen. Somit lässt sich aus einer Kategorie ablesen, welche Artikel oder Kategorien in dieser eingetragen sind.
 Dieser Schritt ermöglicht schließlich die Konstruktion eines Kategoriengraphen aus dem Wikipedia-Datensatz und ist zudem die Grundlage für die später folgende visuelle Darstellung der Kategorien in Form eines Baumes.
-Auf diese Weise übernimmt die Datenbank nicht nur die Aufgabe die Daten zu speichern und zugänglich zu machen, sondern erweitert die Informationen aus dem Wikipedia-Datensatz um die Zugehörigkeit von Artikeln und Kategorien zu weiteren Kategorien.
+Auf diese Weise übernimmt die Datenbank nicht nur die Aufgabe, die Daten zu speichern und zugänglich zu machen, sondern erweitert die Informationen aus dem Wikipedia-Datensatz um die Zugehörigkeit von Artikeln und Kategorien zu weiteren Kategorien.
 Die Datenbank bildet somit Teile aus der Wikipedia, als auch Teile aus der Ähnlichkeitsmatrix ab und ermöglicht den Zugriff auf die extrahierten Informationen aus den Daten.
 
 \paragraph{WikiDB}
-Die \emph{WikiDB} ist eine Hülle, welche um die Datenbank herum konstruiert ist.
-Sie erleichtert die Interaktion mit der Datenbank, indem sie die Interaktion auf die Abstraktionsebene von Artikeln, Kategorien und Vergleichen hebt.
-Dabei übernimmt die \emph{WikiDB} auch Teile der Konstruktion der Datenbank und ermöglicht eine Suche nach Artikeln oder Kategorien, sie ist als Schnittstelle zwischen Daten und Applikation zu verstehen.
-Im Anhang ist ein Auschnitt aus den Funktionalität der \emph{WikiDB} dargestellt. \todotext{refeinfügen}
-
+Die \emph{WikiDB} ist als eine Schnittstelle zwischen den Daten und der Anwendung (Applikation) zu verstehen. 
+Als zusätzliche Struktur umfasst sie die Datenbank. 
+Dadurch kann sie die Interaktion mit der Datenbank durch einen Anwender oder Benutzer erleichtern, da die Interaktion auf der gleichen Abstraktionsebene von Artikeln, Kategorien und Vergleichen stattfindet. 
+Dabei übernimmt die \emph{WikiDB} auch Teile der Datenbank und ermöglicht eine Suche nach Artikeln oder Kategorien.
+Im Anhang ist ein Ausschnitt aus den Funktionalitäten der \emph{WikiDB} dargestellt. \todotext{refeinfügen}
 
 \tikzumlset{fill class=white}
 \begin{figure}
 \begin{tikzpicture}
 \centering
-\umlclass[x=0, y=0]{page}{
+\umlclass[x=0, y=0]{Page}{
 +index : int4   \\
 +revid : int4   \\
 +title : char const*\\
@@ -301,7 +222,7 @@ Im Anhang ist ein Auschnitt aus den Funktionalität der \emph{WikiDB} dargestell
 +getParents() : std::vector<Category> const \\
 }
 
-\umlclass[x=-5, y=-6]{article}{
+\umlclass[x=-5, y=-6]{Article}{T
 +words : int4\\
 +comparisons : dbArray<int64\_t> \\
 }{
@@ -309,86 +230,84 @@ Im Anhang ist ein Auschnitt aus den Funktionalität der \emph{WikiDB} dargestell
 +getComparisons() : std::vector<SimPair> const \\
 }
 
-\umlclass[x=5, y=-6]{category}{
+\umlclass[x=5, y=-6]{Category}{
 +children : dbArray<dbReference<Page> >\\
 }{
 +info() : std::string const \\
 +getChildren() : std::vector<uint32\_t> const\\
 }
-\umlVHVinherit{category}{page}
-\umlVHVinherit{article}{page}
+\umlVHVinherit{Category}{Page}
+\umlVHVinherit{Article}{Page}
 \end{tikzpicture}
-\caption{UML Diagramm der Klassen für die objekt-relationale Datenbank}
+\caption{UML-Diagramm der Klassen für die objektrelationale Datenbank}
 \label{fig:uml-database}
 \end{figure}
 
 % =================================================
  
  % =================================================
-\section{Ablauf der Datenaufbereitung}
-\label{subchap:date-pipeline}
-% Aufbereitung Rohdaten: Säuberung, Formatierung
-    % regex: 
-    % from csv to tsv
-    % new wikiformat?
-% Erstellung der Datenbank
-\todotext{Bild Ablauf Entstehung Matrix (Notizen Skizze)}
+\section{Ablauf der Datenaufbereitung} \label{subchap:date-pipeline}
 
 Die vorangegangenen Kapitel setzen sich mit der Beschaffenheit der in dieser Arbeit untersuchten Datensätze auseinander. Dieses Kapitel behandelt die weitere Datenverarbeitung; wie sollten die Daten verarbeitet werden, damit sie in die Datenbank eingepflegt werden können? Welche Maßnahmen sind erforderlich, um die Daten vor möglichen Fehlerquellen zu schützen?
-Dabei wird darauf eingegangen, welche Probleme auftreten können, wenn erstens die Datensätze von Menschen erzeugt werden und nicht mit absoluter Gewissheit gewährleistet werden kann, dass die Daten einem festgelegten Regelwerk entsprechen. Zweitens wird gezeigt, in welcher Art die Daten fehlerhaft oder nicht vollständig sein können und wie damit umgegangen wird.
+Dabei wird darauf eingegangen, welche Probleme auftreten können, wenn erstens die Datensätze von Menschen erzeugt werden und dadurch Fehler nicht mit absoluter Sicherheit ausgeschlossen werden können, sondern mit einer Fehlerquote zu rechnen ist.
+Zweitens wird gezeigt, in welcher Art die Daten fehlerhaft oder nicht vollständig sein können und wie damit umgegangen wird.
 Abschließend wird exemplarisch dargestellt, wie aus den einzelnen Datensätzen eine Datenbank konstruiert wird.
+\todotext{Bild Ablauf Entstehung Matrix (Notizen Skizze)}
 
-\subsubsection*{Ähnlichkeitsmatrix}
+\paragraph{Ähnlichkeitsmatrix}
 In der Ähnlichkeitsmatrix von \cite{riehmann2016visualizing} wurde zur Identifizierung der einzelnen Artikel ihre jeweilige Revisionsnummer genutzt.
 Mit dieser Nummer lässt sich die exakte Version des Artikels rekonstruieren, mit dem die Berechnung für den Vergleich durchgeführt wurde.
-In der Arbeit von \cite{licht:2017} hingegen wurde auf die Nutzung der Revisionsnummer verzichtet. Stattdessen wird die Wikipeida-Identifikationsnummer, im Folgenden \emph{wikiid}, genutzt.
-Aus der Rekonstruier- und Nachvollziehbarkeit wird dieser Unterschied in den Datensätzen angepasst und auf das Format von \cite{riehmann2016visualizing} übertragen. Somit besteht die Möglichkeit, neben dem gespeicherten Artikel im Wikipedia-Datensatz, auch mit einer API-Anfrage die exakte Version des Artikels zu erhalten.
+In der Arbeit von \cite{licht:2017} hingegen wurde auf die Nutzung der Revisionsnummer verzichtet. Stattdessen wird die Wikipedia-Identifikationsnummer, im Folgenden \emph{Wikipedia-ID}, genutzt.
+Aus der Rekonstruier- und Nachvollziehbarkeit wird dieser Unterschied in den Datensätzen angepasst und auf das Format von \cite{riehmann2016visualizing} übertragen.
+Somit besteht die Möglichkeit, neben dem gespeicherten Artikel im Wikipedia-Datensatz, auch mit einer API-Anfrage die exakte Version des Artikels zu erhalten.
 Auf diese Weise ist der gespeicherte Datensatz nicht die einzige Quelle für die Rekonstruktion der Datenbank, sollte der Datensatz nicht mehr verfügbar sein.
-Damit eine \emph{wikiid} in eine Revisionsnummer aufgelöst werden kann, ist es nötig, beim Durchlaufen des Wikipedia-Datensatzes zur Extraktion der Metainformationen die Abbildung der \emph{wikiid} auf die Revisionsnummer hin zu speichern.
-Zur Vereinfachung wurde im Anschluss die gesamte Ähnlichkeitsmatrix von \emph{wikiids} auf Revisionsnummern hin verändert.
+Damit eine \emph{Wikipedia-ID} in eine Revisionsnummer aufgelöst werden kann, ist es nötig, beim Durchlaufen des Wikipedia-Datensatzes zur Extraktion der Metainformationen die zur \emph{Wikipedia-ID} zugehörige Revisionsnummer zu speichern.
+Auf diese Art ist eine Abbildung der \emph{Wikipedia-ID} auf die Revisionsnummer möglich.
+Zur Vereinfachung wurde im Anschluss die gesamte Ähnlichkeitsmatrix von \emph{Wikipedia-IDs} auf Revisionsnummern hin umgestellt.
 
-\subsubsection*{Wikipedia-Datensatz}
+\paragraph{Wikipedia-Datensatz}
 Das Format des Wikipedia-Datensatzes wird durch ein XML-Schema \footnote{\url{https://www.mediawiki.org/xml/export-0.10.xsd}} definiert.
 Wird das XML-Schema erneuert, muss diese Änderung auch in dem Werkzeug zur Extraktion der Metainformationen berücksichtigt werden.
 % Diese Anpassung des Programms an die Version des XML-Schemas ist keine Herausforderung.
 Der Wikipedia-Datensatz benutzt dabei nicht nur XML als Auszeichnungssprache, sondern auch eine eigene Auszeichnungssprache, die \emph{Wiki Markup Language} \footnote{\url{https://en.wikipedia.org/wiki/Help:Wiki\_markup}}. 
 Diese Auszeichnungssprache wird innerhalb der Textelemente der XML-Datei genutzt und ermöglicht eine Formatierung des geschriebenen Textes.
 Hinzu kommt die Möglichkeit, mit Hilfe der \emph{Wiki Markup Language} auch interne Verknüpfungen auf andere Wikipedia-Seiten herzustellen.
-Extrahiert werden alle Seiten, die im Wikipedia-Namensraum 0 oder 14 liegen, also Artikelseiten oder Kategorieseiten entsprechen.
-Relevant für diese Arbeit ist, dass Artikel- oder Kategorienseiten, welche entweder eine Weiterleitung \footnote{\url{https://en.wikipedia.org/wiki/Template:Disambiguation}} oder eine Vereindeutigung \footnote{\url{https://en.wikipedia.org/wiki/Template:Redirect}} darstellen, nicht mit extrahiert werden.
-Für diesen Fall wurden reguläre Ausdrücke geschrieben, die Seiten dieser Art filtern sollen. Zudem wurden für die Extraktion von Kategoriezugehörigkeiten reguläre Ausdrücke entwickelt.
-Die Extraktion der Kategorien aus den Wikipedia-Seiten ist ein Kernelement der Datenextraktion und nötig um im weiteren Prozess der Visualisierung ihre hierarchische Struktur darzustellen.
+Extrahiert werden alle Seiten, die im Wikipedia-Namensraum 0 oder 14 liegen, also Artikelseiten oder Kategorienseiten entsprechen.
+Relevant für diese Arbeit ist, dass Artikel- oder Kategorienseiten, welche entweder einer Weiterleitung \footnote{\url{https://en.wikipedia.org/wiki/Template:Disambiguation}} oder einer Bergiffsklärung \footnote{\url{https://en.wikipedia.org/wiki/Template:Redirect}} entsprechen, nicht mit extrahiert werden.
+Für diesen Fall wurden reguläre Ausdrücke geschrieben, die Seiten dieser Art filtern sollen.
+Zudem wurden für die Extraktion von Kategoriezugehörigkeiten reguläre Ausdrücke entwickelt.
+Die Extraktion der Kategorien aus den Wikipedia-Seiten ist ein Kernelement der Datenextraktion und nötig, um im weiteren Prozess der Visualisierung ihre hierarchische Struktur darzustellen.
 Zu beachten ist, dass die regulären Ausdrücke angepasst werden müssen, sobald sich die \emph{Wiki Markup Language} ändert.
 
-\paragraph{Verarbeitung}
+\paragraph{Datenverarbeitung} \label{subchap:datenverarbeitung}
 Zwei Werkzeuge wurden weiterentwickelt, um diesen neuen Anforderungen zu entsprechen, das \emph{wikitool} und \emph{createdb}.
-Die Grafik \todotext{3.4} veranschaulicht die Datenverarbeitung durch die Werkzeuge \emph{wikitool} und \emph{createdb}.
+Die Grafik \todotext{3.4} veranschaulicht die Datenverarbeitung durch die Anwendungen \emph{wikitool} und \emph{createdb}.
 
 Als Datensatz zur Eingabe wird der Wikipedia-Datensatz mit verschiedenen Parametern aufgerufen.
-Zunächst (\emph{extract}) werden aus dem Datensatz die Metainformationen zu den entsprechenden Kategorien extrahiert und in einer TSV-Datei gespeichert.
-In einem nächsten Schritt werden die Metainformationen zu den Artikeln zwischengespeichert und im dritten Schritt (\emph{clean}) mit dem Inhalt der Ähnlichkeitsmatrix abgeglichen, damit nur Artikel aus dem Wikipedia-Datensatz in die Datenbank eingetragen werden, welche auch in der ersten Spalte der Ähnlichkeitsmatrix stehen.
-Der zweite Schritt (sample) ist dabei optional und ermöglicht durch ein Stichprobenverfahren den Datensatz zu verkleinern.
+Zunächst werden aus dem Datensatz die Metainformationen zu den entsprechenden Kategorien extrahiert (\emph{extract}) und in einer Datei im TSV-Format (\emph{tab-separated-values}) gespeichert.
+Metainformationen zu den Artikeln werden als Binärdatei zwischengespeichert. % (\emph{pickle-file} \footnote{\url{}})
+Im dritten Schritt (\emph{clean}) werden die Artikel mit dem Inhalt der Ähnlichkeitsmatrix abgeglichen, damit nur Artikel aus dem Wikipedia-Datensatz in die Datenbank eingetragen werden, welche auch in der ersten Spalte der Ähnlichkeitsmatrix stehen.
+Der zweite Schritt (sample) ist dabei optional und ermöglicht, den Datensatz durch ein Stichprobenverfahren zu verkleinern.
 Die Stichprobe kann dabei zufällig oder geschichtet sein. 
-Mit dieser Methode lassen sich kleinere Datesätze erstellen, die als Musterexemplar dienen können.
-\\
-Das Werkzeug \emph{createdb} hingegen konstruiert in drei aufeinander folgenden Schritten die Datenbank.
-Dabei werden erst alle Seiten im Schritt (\emph{pages}) mit ihrem Titel, ihrer Identifikationsnummer und Artikel mit ihrer Anzahl an Wörtern eingefügt.
+Mit dieser Methode lassen sich kleinere Datensätze erstellen, die als Musterexemplar dienen können.\\
+Das Werkzeug \emph{createdb} hingegen konstruiert die Datenbank in drei aufeinander folgenden Schritten.
+Dabei werden erst alle Seiten im Schritt (\emph{Pages}) mit ihrem Titel, ihrer Identifikationsnummer und Artikel mit ihrer Anzahl an Wörtern eingefügt.
 Der Schritt (\emph{parents}) ergänzt die bereits eingetragenen Seiten um die Liste von Kategorien, in denen die Seiten eingeordnet werden.
-Zuletzt werden die Artikelseiten im Schritt (\emph{comparisons}) um die Liste der verglichenen Seiten und ihren Ähnlichkeiten ergänzt.
+Zuletzt werden die Artikelseiten im Schritt (\emph{comparisons}) um die Liste der verglichenen Seiten und ihrer Ähnlichkeiten ergänzt.
 
 Die erzeugte Datenbank kann in den gemeinsam genutzten Speicher kopiert werden und dient der Visualisierung.
 
 
 \begin{figure}
     \centering
-    \begin{tikzpicture}[scale=1.5, page/.style={rectangle, draw, fill=white, rounded corners, minimum size = 1cm}]
+    \begin{tikzpicture}[scale=1.5, Page/.style={rectangle, draw, fill=white, rounded corners, minimum size = 1cm}]
     %boxes
-        \node[page] (simM)      at(-3,5)    {"Ahnlichkeitsmatrix};
-        \node[page] (wikidump)  at(-2.8,3)    {Wikipediadump};
-        \node[page, align=center] (wikitool)    at(-0.5, 4)   {wikitool/\\createdb};
-        \node[page] (wikidb)    at(1.3, 4)   {wikidb};
-        \node[page, align=center] (mapper)    at (3.5,4)    {Objekt-Relation-\\Abbildung};
-        \node[page, align=center] (app)       at (6,4)    {OpenGl-\\Applikation};
+        \node[Page] (simM)      at(-3,5)    {"Ahnlichkeitsmatrix};
+        \node[Page] (wikidump)  at(-2.8,3)    {Wikipediadump};
+        \node[Page, align=center] (wikitool)    at(-0.5, 4)   {wikitool/\\createdb};
+        \node[Page] (wikidb)    at(1.3, 4)   {wikidb};
+        \node[Page, align=center] (mapper)    at (3.5,4)    {Objekt-Relation-\\Abbildung};
+        \node[Page, align=center] (app)       at (6,4)    {OpenGl-\\Applikation};
         
         \draw[decoration={brace, mirror}, decorate] (-3,2.5) node[below]{testing} -- (0,2.5);
     
@@ -400,7 +319,7 @@ Die erzeugte Datenbank kann in den gemeinsam genutzten Speicher kopiert werden u
         \draw[-{triangle 60}] (mapper.east) -- (app.west);
     
     \end{tikzpicture}
-    \caption{Ablauf der einzelnen Schritte, von den Rohdaten zur Konstruktion der Datenbank}
+    \caption{Ablauf der einzelnen Schritte von den Rohdaten zur Konstruktion der Datenbank}
     \label{fig:ablauf-daten}
 \end{figure}
 
@@ -432,8 +351,141 @@ Die erzeugte Datenbank kann in den gemeinsam genutzten Speicher kopiert werden u
         \draw[decoration={brace, mirror}, decorate] (8,2.5) node at(9,1.6){Datenbank} -- (10,2.5);
         
     \end{tikzpicture}
-    \caption{Caption}
+    \caption{Ablauf der Konstruktion der Datenbank aus dem Wikipedia-Datensatz mit den Werkzeugen \emph{wikitool} und \emph{createdb}. Die internen Programmabläufe sind innerhalb der Werkzeuge abzulesen.}
     \label{fig:my_label}
 \end{figure}
 
 % =================================================
+
+
+
+
+
+
+
+
+
+
+% Aufbereitung Rohdaten: Säuberung, Formatierung
+    % regex: 
+    % from csv to tsv
+    % new wikiformat?
+% Erstellung der Datenbank
+
+
+
+% SIMILARITY MATRIX 
+% % first column
+% \draw[black, thick, ->] (2,5.5) -- (5,5.5) node[near start, above]{a};
+% \draw[black, thick, ->] (0,5) -- (0,3) node[left]{b};
+% % \draw (0,0) node {a: absteigende "Ahnlichkeitsewrte};
+% % \draw (6,0) node {b: absteigende Artikell"ange};
+% \foreach \y in {1,1.5,...,5}
+% {
+%     \draw (1,\y) +(-.75,-.25) rectangle ++(.75,.25);
+%     \draw (1,\y) node{revid};
+% }
+
+
+% \foreach \x in {2.5,4.0}
+% {
+%     \foreach \y in {1,1.5,...,5}
+%     \filldraw[fill=green!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
+%     % \draw (\x,1) node{revid};
+% }
+% \foreach \x in {5.5,7.0}
+% {
+%     \foreach \y in {1,1.5,...,5}
+%     \filldraw[fill=red!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
+%     % \draw (\x,1) node{revid};
+% }
+% \foreach \x in {8.5,10.0}
+% {
+%     \foreach \y in {1,1.5,...,5}
+%     \filldraw[fill=green!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
+%     % \draw (\x,1) node{revid};
+% }
+% \foreach \x in {11.5,13.0}
+% {
+%     \foreach \y in {1,1.5,...,5}
+%     \filldraw[fill=red!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
+%     % \draw (\x,1) node{revid};
+% }
+% \foreach \x in {14.5,16.0}
+% {
+%     \foreach \y in {1,1.5,...,5}
+%     \filldraw[fill=green!30] (\x,\y) +(-.75,-.25) rectangle ++(.75,.25);
+%     % \draw (\x,1) node{revid};
+% }
+    
+% \foreach \y in {1,1.5,...,5} {
+%     \foreach \x in {2.5,5.5,...,16}
+%     {
+%         \draw (\x,\y) node{revid};
+%     }
+%     \foreach \x in {4.0,7.0,...,16}
+%     {
+%         \draw (\x,\y) node{simval};
+%     }
+% }
+    
+%     % % revision
+%     % \foreach \x in {2.7,5.7,...,15}
+%     % {
+%     %     \filldraw[fill=green!30, thick] (\x,1.5) +(-.75,-.25) rectangle ++(.75,.25);
+%     %     \draw (\x,1.5) node{revid};
+%     % }
+%     % %simval
+%     % \foreach \x in {4.2,7.2,...,15}
+%     % {
+%     %     \filldraw[fill=red!30, thick] (\x,1.5) +(-.75,-.25) rectangle ++(.75,.25);
+%     %     \draw (\x,1.5) node{simval};
+%     % }
+% % }
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Mit der Hilfe von regul"aren Ausdr"ucken k"onnen auch Metainformatione aus dem Flie"stext extrahiert werden, in diesem Fall die Kategorizugeh"origkeit.
+% F"ur die Extraktion aller Metainformation aus dem Wikipediadatensatz wurde ein Programm geschrieben um die Daten in Datein zwischenspeichert um Sie dann mit dern Daten aus der "Ahnlihckeitsmatrix zusammen zuf"uhren.
+
+
+
+
+
+% beide Arbeiten verwenden die Kosinusähnlichkeit als Ma"s für die Vergleiche
+% Bezugname Arbeit von Potthast
+%   Verwendetes "Ahnlichkeitesma"s 
+%   Daten "uber die "Ahnlichkeiten (Anzahl)
+
+% Bezugnahme zur Thesis von Tristan Licht
+%   Verwendetes "Ahnlichkeitesma"s
+%   "Ahnlichkeit von Paragrafen
+%   Daten "uber die "Ahnlichkeiten (Anzahl)
+
+% Inhalt der Matrix
+% schematischer aufbau grafik
+% Vergleich der zwei Datens"atze
+ 
+% kurzer Absatz wie im Papert vta, was wurde wie berechnet
+% kleine Tabelle??
+
+
+
+
+% Datenstruktur wikipedia Korpus
+%   groesse
+%   Namensräume
+%   welche meta informationen werden extrahiert
+%       titel, laenge, revid, wikiid, categories, 
+% struktur Kategorienbaum
+ 
