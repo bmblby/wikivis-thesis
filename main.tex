@@ -14,6 +14,9 @@
 
 % Bagrat Test
 %\usepackage[sort&compress]{natbib}
+% enumerate sentences as examples
+\usepackage{lingmacros}
+\usepackage{enumitem}
 
 
 \begin{document}
@@ -35,7 +38,7 @@ Studiengang Medieninformatik
 \begin{center}
 \vspace{20mm}
 \begin{LARGE}
-Visualisierung der Kategorienstruktur der Wikipedia und Filterung der Ähnlichkeiten von Artikeln auf Basis von Kategorien.\\
+Visualisierung der Kategorienstruktur der Wikipedia und Filterung der Ähnlichkeiten von Artikeln auf Basis von Kategorien\\
 \end{LARGE}
 \vspace{20mm}
 \begin{LARGE}
@@ -45,7 +48,7 @@ Bachelorarbeit
 \vspace{2 cm}
 
 \vspace{1 cm}
-\begin{flushleft}Giuliano Castiglia \hfill Matrikelnummer 110656\\
+\begin{flushleft}Giuliano Castiglia \hfill Matrikelnummer: 110656\\
 geb. am: 8. Oktober 1991 in Neapel
 \end{flushleft}
 
@@ -53,17 +56,17 @@ geb. am: 8. Oktober 1991 in Neapel
 
 \begin{flushleft}
 1. Gutachter: Prof. Dr. Bernd Fröhlich\\
-2. Gutachter: tba\\
+2. Gutachter: Jun.-Prof. Dr. Matthias Hagen\\
 \end{flushleft}
 
 \vspace{1.5cm}
 \begin{flushleft}
-Datum der Abgabe: 4. September 2017
+Datum der Abgabe: 2. Oktober 2017
 \end{flushleft}
 \end{center}
 \clearpage
 \pagestyle{useheadings} % normale Kopf- und Fußzeilen für den Rest
-\renewcommand*\contentsname{Table of Contents}
+\renewcommand*\contentsname{Inhaltsverzeichnis}
 
 % ===============================================================
 
@@ -73,7 +76,7 @@ Datum der Abgabe: 4. September 2017
 Hiermit versichere ich, dass ich die Bachelorarbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, alle Ausführungen, die anderen Schriften wörtlich oder sinngemäß entnommen wurden, kenntlich gemacht sind und die Arbeit in gleicher oder ähnlicher Fassung noch nicht Bestandteil einer Studien- oder Prüfungsleistung war.
 
 \vspace{3cm}
-Weimar, der 2. Oktober 2017
+Weimar, den 2. Oktober 2017
 
 \vspace{1cm}
 \noindent\rule{5cm}{0.4pt}\\
@@ -84,33 +87,22 @@ GIULIANO CASTIGLIA
 % ===============================================================
 
 \addchap{Kurzfassung}
-% Destilierte Variante der Thesis
-% was ist in der Arbeit entstanden?
-% mit Welchen Methoden
-% mit welchen Daten
-
-Im Rahmen dieser Arbeit wird eine Visualisierung vorgestellt, welche Kategorien der Wikipedia visuell in Form eines radial angeordneten Baumes darstellt.
+Im Rahmen dieser Arbeit wird eine Visualisierung vorgestellt, in der die Kategorien der Wikipedia visuell in Form eines radial angeordneten Baumes dargestellt werden.
 Des Weiteren wird ein Verfahren erläutert, welches auf Basis der Wikipedia-Kategorien eine dünn besetzte Matrix von Ähnlichkeiten zwischen Wikipedia-Artikel filtert.
-Die Wikipedia dient dabei als Quelle für die Daten.
+Die Informationen über die Kategorien und Artikel werden dafür aus der Wikipedia extrahiert und in einem Format zusammengefasst, welches für die visuelle Darstellung der Daten optimiert ist.
+So wird eine Methode erarbeitet, um aus einem vernetzten Graphen, bestehend aus den Wikipedia-Kategorien, eine hierarchische Baumstruktur zu erhalten.
+Diese Baumstruktur ermöglicht eine interaktive Nutzung und Exploration.
+Ein weiterer Beitrag der Arbeit ist es, eine Strategie zu entwickeln, um die dünn besetzte Matrix von einer Größe von 643\,GB auf ein spezifisches Themengebiet einzuschränken und auf diese Weise die sehr umfangreiche Menge an Artikelvergleichen inhaltlich zu filtern.
+% In dieser Arbeit wird ein neuer Ansatz verfolgt, welcher sich auf Kategorien fokussiert.
+% Die Kategorien sollen einen abstrakteren Zugang zu den Artikeln schaffen, die Übersichtlichkeit stärken und die Auswahl an Artikeln auf ein Themengebiet beschränken.
 
-% Im Rahmen dieser Arbeit wird eine Methode erläutert, welche einerseits die Kategorien der öffentlich zugänglichen Online-Plattform und Enzyklopädie Wikipedia in Form eines radial angeordneten Baumes visuell darstellt, als auch andererseits dazu dienen soll, ein Verfahren zu finden, um eine dünn besetzte Matrix mit Vergleichen zwischen Artikel zu filtern.
-Die Informationen über die Kategorien und Artikel werden dabei aus der Wikipedia extrahiert und in einem Format zusammengefasst, welches die visuelle Darstellung der Daten ermöglichen soll.
-Dabei wird eine Methode erarbeitet, um aus dem vernetztem Graph von Kategorien, eine hierarchische Baumstruktur zu erhalten.
-Diese Baumstruktur soll interaktiv verwendbar sein und eine Exploration der Baumstruktur ermöglichen.
-In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn besetzte Matrix, von einer Größe von 643\,GB, auf ein Themengebiet einzuschränken und auf diese Weise die sehr umfangreiche Menge an Artikelvergleichen semantisch zu filtern.
-
-
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{./cover}
-% \caption{Die Kategorie \textit{Computer science} bildet als Stammverzeichnis das Zentrum. Alle Kategorien einer Entfernung von drei zur Stammkategorie sind auf konzentrischen Ringen angeordnet.}
-% \label{fig:cover}
+\includegraphics[scale=.11]{./cover}
+% \caption{}
+\label{fig:cover}
 \end{figure}
 
-% \textit{"However, as we can witness from the example of the Porphyrian tree, the tree of Jesse, the consanguinity tree, Llull's tree of science, and Darwin's tree of life, when sustained by a unique thesis or proposition, a visualization can become an immensely powerful tool and an enduring, contagious meme."}
-% \begin{flushleft}
-% (Lima 2014, S .43)
-% \end{flushleft}
 
 % ===============================================================
 
@@ -123,6 +115,11 @@ In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn b
 % richtiger Inhalt
 \cleardoublepage
 \pagenumbering{arabic} % ab jetzt die normale arabische Nummerierung
+
+% \textit{"However, as we can witness from the example of the Porphyrian tree, the tree of Jesse, the consanguinity tree, Llull's tree of science, and Darwin's tree of life, when sustained by a unique thesis or proposition, a visualization can become an immensely powerful tool and an enduring, contagious meme."}
+% \begin{flushleft}
+% (Lima 2014, S .43)
+% \end{flushleft}
 
 \chapter{Einleitung}
 \label{chap:einleitung}
@@ -144,7 +141,7 @@ In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn b
 \label{chap:Implementierung}
 \input{sections/05_implementierung.tex}
 
-\chapter{Zusammenfassung}
+\chapter{Zusammenfassung und Ausblick}
 \label{chap:Zusammenfassung}
 \input{sections/06_zusammenfassung.tex}
 
@@ -157,13 +154,11 @@ In einem weiterem Teil der Arbeit wird eine Strategie entwickelt, um die dünn b
 \newpage
 \let\cleardoublepage\clearpage
 \chapter*{Danksagung}
-% The \textit{Lena} image is obtained from the website of Mike Wakin\footnote{ \textit{Lena} test image website.\quad {\url{http://www.ece.rice.edu/~wakin/images/}}\newline [Online, accessed 26-November-2016]}.
+An dieser Stelle möchte ich mich bei Prof. Dr. Bernd Fröhlich für die Annahme und Betreuung meiner Bachelorarbeit bedanken.
+Bedanken möchte ich mich auch bei Dr. Patrick Riehmann für die konstruktive Betreuung bei der Anfertigung der Arbeit.
+Mein besonderer Dank geht an Isabelle Schlegel, Vincent Cramer und Bagrat Ter-Akopyan für die unermüdlichen Unterstützungen während der Bearbeitung.
+Nicht zuletzt möchte ich meiner Mutter, meinem Bruder und meinem Vater danken, die mich bis hierhin begleitet haben.
 
-Wikipedia Datensatz
-
-Ähnlichkeitsmatrix Tristan Licht
-
-wikidb project visaul text analytics
 
 
 % ================================================================
